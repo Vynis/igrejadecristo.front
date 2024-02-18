@@ -1,0 +1,206 @@
+<div *ngIf="(carregou | async) == true" class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+
+
+
+  <mat-toolbar class="example-toolbar">
+    <button class="navbar-toggler" type="button" (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h3 class="example-app-name">Curso: {{curso.titulo}}</h3>
+    <span class="example-spacer"></span>
+    <a class="btn btn-outline-success my-2 my-sm-0" routerLink="/dashboard">Voltar</a>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0" opened>
+
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56">
+
+      <mat-nav-list style="width: 300px" dense>
+        <div class="row">
+          <span class="col-xl-2"></span>
+          <span class="col-xl-8" style="font-size: medium; text-align: center;"> Progresso<p>
+              <ngb-progressbar type="success" textType="white" [value]="qtdProgresso" [showValue]="true">
+              </ngb-progressbar>
+            </p></span>
+          <span class="col-xl-2"></span>
+        </div>
+        <mat-expansion-panel
+          [expanded]="mod.id == this.conteudoSelecionado.moduloId && conteudoSelecionado.tipo != 'PR'"
+          *ngFor="let mod of modulos | orderBy: 'ordem'" [class.mat-elevation-z0]="true" dense>
+          <mat-expansion-panel-header>
+            {{mod.titulo}}
+          </mat-expansion-panel-header>
+          <mat-nav-list dense>
+            <div mat-list-item [class.active]="conteudoSelecionado.id == cont.id" (click)="selecionarConteudo(cont,'', mod)"
+              *ngFor="let cont of mod.conteudos | orderBy: 'ordem'" class="e"
+              style="padding-bottom: 10px; padding-left: 23px; padding-top: 10px;">
+              {{cont.titulo}}
+              <mat-icon *ngIf="cont.conteudoConcluido" class="float-right" style="color: green;">check_box</mat-icon>
+              <mat-icon *ngIf="!cont.conteudoConcluido" class="float-right">check_box_outline_blank</mat-icon>
+            </div>
+          </mat-nav-list>
+        </mat-expansion-panel>
+      </mat-nav-list>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+
+      <mat-spinner *ngIf="(carregou | async) == false"></mat-spinner>
+
+      <div class="row">
+        <div class="col-xl-12" style="background-color: white;">
+          <div class="row">
+            <div class="col-xl-6">
+              <button [hidden]="conteudoSelecionado.tipo == 'PR' || conteudoSelecionado.tipo == 'PA'"
+                [disabled]="conteudoSelecionado.id == idConteudoInicial" (click)="selecionarConteudo(null, 'a')"
+                style="width: 100%;" class="btn btn-outline-danger my-2 my-sm-0"><i class="fas fa-arrow-left"></i>
+                Anterior</button>
+            </div>
+            <div class="col-xl-6" style="text-align: right;">
+              <button [hidden]="conteudoSelecionado.tipo == 'PR' || conteudoSelecionado.tipo == 'PA'" [disabled]="conteudoSelecionado.id == idConteudoFinal"
+                (click)="selecionarConteudo(null, 'p')" style="width: 100%;"
+                class="btn btn-outline-success my-2 my-sm-0">Próximo
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+            <div class="col-xl-12">
+              <mat-divider></mat-divider>
+            </div>
+            <div *ngIf="conteudoSelecionado.id != 0" class="col-xl-12">
+              <div *ngIf="conteudoSelecionado.tipo == 'VI'" style="width: 100%; height: 450px;">
+
+                <mat-video [title]="conteudoSelecionado.titulo" showFrameByFrame="true"
+                  [src]="localApi + 'arq_videos/' + conteudoSelecionado.arquivo"></mat-video>
+                <!-- <video [id]="conteudoSelecionado.id" *ngIf="conteudoSelecionado.tipo == 'VI'" width="100%" height="450px" controls>
+                  <source [src]="localApi + 'arq_videos/' + conteudoSelecionado.arquivo" type='video/mp4' />
+                </video> -->
+              </div>
+
+              <div *ngIf="conteudoSelecionado.tipo == 'VE'" >
+
+
+                <video #videoPlayer preload="auto"  poster="../../../../assets/media/video.png" controls width="100%" height="450px" oncontextmenu="return false;" controlsList="nodownload">
+                  <source src="{{conteudoSelecionado.arquivo}}" type='video/mp4'/>
+               </video>
+              </div>
+              <div *ngIf="conteudoSelecionado.tipo == 'DO'" style=" overflow-y: scroll;height: 450px;">
+                <a [href]="localApi + 'arq_arquivos/' +conteudoSelecionado.arquivo" target="_blank" >Clique aqui</a> para baixar o arquivo.
+              </div>
+
+              <div *ngIf="conteudoSelecionado.tipo == 'PR' || conteudoSelecionado.tipo == 'PA' " >
+                <div *ngIf="provaRealizada" style="height: 450px; text-align: center; padding-top: 100px;" >
+                 <h1>Parabéns.. Você já respondeu avaliação.</h1>
+                </div>
+                <div *ngIf="!provaRealizada">
+                  <form  #formulario>
+                    <div class="row" style="padding-bottom: 15px; padding-top: 15px;">
+                      <div class="col-xl-12" style="text-align: center;">
+                        <h2>{{conteudoSelecionado.titulo}}</h2>
+                      </div>
+                      <div class="col-xl-12" *ngIf="conteudoSelecionado.arquivo !== null"  style="text-align: center;">
+						<img [src]="conteudoSelecionado.arquivo" class="responsive" alt="{{conteudoSelecionado.titulo}}">
+                      </div>
+                    </div>
+
+                    <div style="padding: 10px;" *ngFor="let prova of conteudoSelecionado.provas; let i = index" class="row">
+                      <div class="col-xl-3"></div>
+                      <div class="col-xl-6">
+                        <h4>{{(i +1) + ') ' +prova.pergunta}}</h4>
+                        <div *ngIf="prova.tipoComponente == 'M'" style="text-align: right;"><span ><em>*Múltipla escolha</em></span></div>
+                        <div *ngIf="prova.tipoComponente == 'E'">
+                          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                            [id]="i">
+                            <mat-radio-button (change)="atualizaGroupBoxSelecionado($event,'conteudo-' + prova.id)" class="example-radio-button" *ngFor="let itensProvas of prova.itensProvas" [value]="itensProvas.id">
+                              <span class="wrap-mat-radio-label">
+                                {{itensProvas.questao}}
+                              </span>
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                        <div *ngIf="prova.tipoComponente == 'M'">
+                          <ul>
+                            <li style="padding-bottom: 5px;" *ngFor="let intensProvas of prova.itensProvas">
+                              <mat-checkbox [id]="intensProvas.id" (change)="atualizaChechkBoxSelecionado($event, 'item-' + intensProvas.id)">
+                                <span class="wrap-mat-radio-label">
+                                  {{intensProvas.questao}}
+                                </span>
+                              </mat-checkbox>
+                            </li>
+                          </ul>
+                        </div>
+                        <div *ngIf="prova.tipoComponente == 'T'">
+                          <div class="form-group">
+                            <textarea class="form-control" [id]="'conteudo-' + prova.id" cols="40" rows="5"></textarea>
+                          </div>
+                        </div>
+                        <mat-divider style="padding-bottom: 15px;"></mat-divider>
+                      </div>
+                      <div class="col-xl-3"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-3"></div>
+                      <div *ngIf="exiteErro" class="col-xl-6 alert alert-warning alert-dismissible fade show" style="text-align: center;" role="alert">
+                        Atenção responda todos itens do questionário.
+                      </div>
+                      <div class="col-xl-3"></div>
+                    </div>
+                    <div class="row" style="padding-bottom: 15px; padding-top: 15px;">
+
+                      <div class="col-xl-3"></div>
+                      <div class="col-xl-6" style="text-align: left;">
+                        <div (click)="enviarProva(conteudoSelecionado)" class="btn btn-primary">Enviar</div>
+                      </div>
+                      <div class="col-xl-3"></div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <mat-divider></mat-divider>
+            </div>
+			{{conteudoSelecionado.tipo }}
+            <div *ngIf="conteudoSelecionado.id != 0 && conteudoSelecionado.tipo != 'PR' && conteudoSelecionado.tipo != 'PA'" class="col-xl-12"
+              style="margin: 10px;height: 450px;">
+              <span>
+                <h5> {{ conteudoSelecionado.modulo.titulo }} - {{ conteudoSelecionado.titulo}}</h5>
+              </span>
+              <mat-tab-group animationDuration="0ms">
+                <mat-tab label="Anexos">
+                  <div *ngIf="conteudoSelecionado.anexos.length > 0">
+                    <ul>
+                      <li *ngFor="let anexo of conteudoSelecionado.anexos">
+                        <a [href]=" localApi + 'arq_anexos/' + anexo.arquivo" target="_blank">{{anexo.titulo}}</a>
+                      </li>
+                    </ul>
+
+                  </div>
+                  <div *ngIf="conteudoSelecionado.anexos.length == 0 || conteudoSelecionado.anexos == null">
+                    Nenhum anexo para este contéudo.
+                  </div>
+                </mat-tab>
+                <mat-tab label="Observações">
+                  {{ conteudoSelecionado.descricao }}
+                  <div *ngIf="conteudoSelecionado.descricao == '' || conteudoSelecionado.descricao == null">
+                    Nenhuma observação.
+                  </div>
+                </mat-tab>
+                <!-- <mat-tab label="Perguntas e respostas"> Perguntas e respostas </mat-tab> -->
+              </mat-tab-group>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+</div>
+
+
