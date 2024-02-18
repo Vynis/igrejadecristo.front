@@ -1,0 +1,59 @@
+<form *ngIf="listaCiclos.length > 0" [formGroup]="formulario">
+<nb-card>
+  <nb-card-header>
+   <h5>Filtro</h5> 
+  </nb-card-header>
+  <nb-card-body>
+    
+      <div class="row">
+        <div class="col-sm-3">
+          <label for="nome" class="label">Nome</label>
+          <input type="text" formControlName="nome" nbInput fullWidth placeholder="nome" >
+        </div>
+        <div class="col-sm-3">
+          <label for="ciclo" class="label">Ciclo</label>
+          <nb-select placeholder="Selecione o Ciclo" fullWidth formControlName="ciclo" >
+            <nb-option value="">Todos</nb-option>
+            <nb-option *ngFor="let cic of listaCiclos" [value]="cic.ciclo">{{cic.ciclo}}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-sm-3">
+          <label for="ano" class="label">Ano</label>
+          <nb-select placeholder="Selecione o Ano" fullWidth formControlName="ano" >
+            <nb-option value="">Todos</nb-option>
+            <nb-option *ngFor="let an of listaAnos" [value]="an.ano">{{an.ano}}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-sm-3">
+          <label for="status" class="label">Status Pagto</label>
+          <nb-select placeholder="Selecione o Status" fullWidth formControlName="status" >
+            <nb-option value="">Todos</nb-option>
+            <nb-option value="Pagamento Confirmado">Pagamento Confirmado</nb-option>
+            <nb-option value="Aguardando Pagamento">Aguardando Pagamento</nb-option>
+          </nb-select>
+        </div>
+      </div>  
+        
+    
+  </nb-card-body>
+  <nb-card-footer>
+    <button type="submit" (click)="obterDadosGrid()" nbButton status="primary">Filtrar</button>
+  </nb-card-footer>
+</nb-card>
+</form>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-10" style="padding-top: 15px;">
+        <h5>Lista de Inscrições</h5>
+      </div>
+      <div class="col-sm-2" style="text-align: right">
+        <a  nbButton status="success" (click)="downloadExcel()" >Exportar para Excel</a>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <app-grid-view [colunas]="colunas" [acoes]="acoes" [dadosTabela]="dadosTabela" [tamanhoPagina]="[20, 30, 50]" ></app-grid-view>
+  </nb-card-body>
+</nb-card>
