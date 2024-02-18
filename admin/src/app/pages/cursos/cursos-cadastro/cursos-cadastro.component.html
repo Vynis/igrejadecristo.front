@@ -1,0 +1,144 @@
+<div class="row">
+  <div class="col-md-12">
+    <form *ngIf="curso" [formGroup]="formulario">
+    <nb-card>
+      <nb-card-header>
+       <h5>{{tituloPagina}}</h5> 
+      </nb-card-header>
+      <nb-card-body>
+        <nb-tabset>
+          <nb-tab tabTitle="Dados básicos">
+            <!-- <form *ngIf="curso" [formGroup]="formulario"> -->
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="titulo" class="label">Titulo</label>
+                    <input type="text" class="form-control"
+                    [ngClass]="{'is-invalid': formulario.get('titulo').errors  && formulario.get('titulo').touched}"
+                    nbInput fullWidth id="titulo" placeholder="Titulo" formControlName="titulo" >
+                    <div *ngIf="formulario.get('titulo').hasError('required')  && formulario.get('titulo').touched" class="invalid-feedback">
+                      O titulo é obrigatório.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="cargaHoraria" class="label">Carga Horária</label>
+                    <input type="text" class="form-control" 
+                    [ngClass]="{'is-invalid': formulario.get('cargaHoraria').errors  && formulario.get('cargaHoraria').touched}"
+                    nbInput fullWidth id="cargaHoraria" formControlName="cargaHoraria" placeholder="Carga Horária">
+                    <div *ngIf="formulario.get('cargaHoraria').hasError('required')  && formulario.get('cargaHoraria').touched" class="invalid-feedback">
+                      A carga horária é obrigatório.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                    <label for="status" class="label">Status</label><br>
+                    <nb-select id="status" formControlName="status"  selected="A">
+                      <nb-option value="A">Ativo</nb-option>
+                      <nb-option value="I">Inativo</nb-option>
+                    </nb-select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                  <div class="form-group">
+                    <label for="descricao" class="label">Descrição</label>
+                    <textarea class="form-control" 
+                    [ngClass]="{'is-invalid': formulario.get('descricao').errors  && formulario.get('descricao').touched}"
+                     rows="5" formControlName="descricao"  nbInput fullWidth shape="round" id="descricao" placeholder="Descrição"></textarea>
+                     <div *ngIf="formulario.get('descricao').hasError('required')  && formulario.get('descricao').touched" class="invalid-feedback">
+                      A descrição é obrigatório.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- </form> -->
+          </nb-tab>
+          <nb-tab tabTitle="Professores">
+            <div class="row" >
+              <div class="col-sm-4">
+                <nb-select [formControl]="selectedProfessor" style="width: 100%;" placeholder="Professores">>
+                  <nb-option [value]="null">Selecione</nb-option>
+                  <nb-option *ngFor="let professor of listaProfessores" [value]="professor">{{professor.nome}}</nb-option>
+                </nb-select>
+              </div>
+              <div class="col-sm-2">
+                <a  (click)="addProfessor()"  nbButton status="primary">Adicionar</a>
+              </div>
+            </div>
+            <div style="padding-top: 15px;" class="row">
+              <div class="col-sm-12">
+                <ul>
+                  <li *ngFor="let lista of listaProffessoresAdd" style="padding-bottom: 5px;">
+                    {{lista.nome}} <button (click)="remProfessor(lista)" nbButton status="danger" size="tiny">Excluir</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </nb-tab>
+          <nb-tab tabTitle="Modulos">
+            <div class="row" >
+              <div class="col-sm-12">
+                <a  (click)="addModulo()" class="float-right" nbButton status="primary">Adicionar Modulo</a>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-12">
+                <nb-card formArrayName="modulo" *ngFor="let mod of modulo.controls; let i = index;">
+                  <nb-card-header>Modulo {{i + 1}}</nb-card-header>
+                  <nb-card-body>
+                    <div >
+                      <div class="row" [formGroupName]="i" >
+                        <input type="hidden" formControlName="id">
+                        <div class="col-sm-10">
+                          <label for="titulo" class="label">Titulo</label>
+                          <input type="text" class="form-control"
+                          [ngClass]="{'is-invalid': modulo.get( i + '.titulo').errors  && modulo.get(i + '.titulo').touched}"
+                          nbInput fullWidth id="titulo" placeholder="Titulo" formControlName="titulo" >
+                          <div *ngIf="modulo.get( i + '.titulo').hasError('required')  && modulo.get( i + '.titulo').touched" class="invalid-feedback">
+                            O titulo é obrigatório.
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <label for="ordem" class="label">Ordem</label>
+                          <input type="text" class="form-control"
+                          [ngClass]="{'is-invalid': modulo.get(i + '.ordem').errors  && modulo.get(i + '.ordem').touched}"
+                          nbInput fullWidth id="ordem" placeholder="Ordem" formControlName="ordem" >
+                          <div *ngIf="modulo.get(i + '.ordem').hasError('required')  && modulo.get(i + '.ordem').touched" class="invalid-feedback">
+                            Ordem é obrigatório.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </nb-card-body>
+                  <nb-card-footer><a  (click)="remModulo(i)" nbButton status="danger">Remover Modulo</a></nb-card-footer>
+                </nb-card>
+              </div>
+            </div>
+
+            <div *ngIf="modulo.controls.length > 1" class="row" >
+              <div class="col-sm-12">
+                <a  (click)="addModulo()" class="float-right" nbButton status="primary">Adicionar Modulo</a>
+              </div>
+            </div>
+          </nb-tab>
+        </nb-tabset> 
+      </nb-card-body>
+      <nb-card-footer>
+        <div class="row">
+          <div class="col-sm-1">
+            <button (click)="salvar()" type="submit" nbButton status="success">Enviar</button>
+          </div>
+          <div class="col-sm-1">
+            <a ghost nbButton status="danger" routerLink="/pages/cursos/lista" >Voltar</a>
+          </div>
+        </div>
+      </nb-card-footer>
+    </nb-card>
+  </form>
+  </div>
+</div>
