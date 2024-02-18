@@ -1,0 +1,44 @@
+<app-navbar [titulo]="'Meus cursos'" ></app-navbar>
+
+
+<ion-content [scrollEvents]="true" *ngIf="listaInscricaoCurso" padding>
+  <ion-refresher slot="fixed" (ionRefresh)="buscarMinhasInscoes($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="12">
+        <ion-text *ngIf="listaInscricaoCursoBackup.length == 0">
+          <h2>Você não esta inscrito em nenhum curso...</h2>
+        </ion-text>
+        <ion-searchbar *ngIf="listaInscricaoCursoBackup.length > 0"  placeholder="Pesquisar" showcancelbutton="" (ionInput)="filtro($event)" ></ion-searchbar>
+        <ion-card *ngFor="let lista of listaInscricaoCurso">
+          <ion-card-header>
+            <ion-card-title>{{lista.processoInscricao.curso.titulo}}</ion-card-title>
+          </ion-card-header>
+        
+          <ion-card-content>
+            Id: {{lista.id}} <br>
+            Data da Inscrição: {{lista.dataInscricao | date:"dd/MM/yyyy hh:mm:ss"}} <br>
+            Status da inscrição: <b>{{ lista.status == 'CO' ? 'Confirmado' : 'Aguardando Pagamento' }} </b> <br>
+            <span *ngIf="!(dataAtual >= lista.processoInscricao.dataInicioVisualizacaoCurso && dataAtual <= lista.processoInscricao.dataFinalVisualizacaoCurso) && !(lista.processoInscricao.dataInicioVisualizacaoCurso >= dataAtual) && lista.processoInscricao.naoTemDataVisualizacao ">
+              <br><em style="color: red;">Periodo de visualização concluído! {{lista.processoInscricao.dataInicioVisualizacaoCurso}}</em>
+            </span>
+            <!-- <ion-progress-bar color="primary" value="0.5"></ion-progress-bar> -->
+            <ion-button [routerLink]="['/curso/' + lista.id]" *ngIf="lista.status == 'CO' && ( dataAtual >= lista.processoInscricao.dataInicioVisualizacaoCurso && dataAtual <= lista.processoInscricao.dataFinalVisualizacaoCurso)" >Acessar</ion-button>
+            <ion-button (click)="presentModal(lista)" *ngIf="lista.status == 'AG' && ( dataAtual >= lista.processoInscricao.dataInicalPagto && dataAtual <= lista.processoInscricao.dataFinalPagto) && lista.processoInscricao.tipo == 'P'" color="success">
+              <ion-icon name="wallet-outline"></ion-icon>&nbsp;
+              Realizar Pagamento
+            </ion-button>
+            <ion-button (click)="cancelarInscricao(lista.id)" *ngIf="lista.status == 'AG'" color="warning">
+              <ion-icon name="close-circle-outline"></ion-icon>&nbsp;
+              Cancelar Inscrição</ion-button>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
