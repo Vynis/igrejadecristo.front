@@ -1,0 +1,27 @@
+<app-navbar [titulo]="'Pagamento'" >
+  <ion-buttons  slot="end">
+    <ion-button (click)="dismiss()" >Fechar</ion-button>
+  </ion-buttons>
+</app-navbar>
+
+<ion-content [scrollEvents]="true" padding>
+  <div style="padding: 15px;" >
+  <h3><ion-icon name="checkmark-circle-outline"></ion-icon> Parabéns sua inscrição realizada com sucesso!!</h3><br /> 
+  <em>Id: {{id}}</em><br />
+  <h4>Por favor selecione uma forma de pagamento:</h4>
+
+  <ion-button (click)="gerarPagamento('CREDIT_CARD')"  color="success">
+    <ion-icon name="card-outline"></ion-icon>&nbsp;
+    Pagar com Cartão
+  </ion-button>
+  <ion-button *ngIf="inscricao.processoInscricaoId != 34" (click)="gerarPagamento('BOLETO')"  color="success">
+    <ion-icon name="cash-outline"></ion-icon>&nbsp;
+    Pagar no Boleto
+  </ion-button>
+  <ion-button  (click)="gerarPagamento('PIX')"  color="success">
+    <ion-icon name="cash-outline"></ion-icon>&nbsp;
+    Pagar no PIX
+  </ion-button>
+  </div>
+
+</ion-content>

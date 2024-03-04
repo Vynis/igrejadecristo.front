@@ -1,0 +1,8 @@
+{
+	"appId": "br.com.igrejadecristo.appsummit",
+	"appName": "app-summit",
+	"webDir": "www",
+	"server": {
+		"androidScheme": "https"
+	}
+}

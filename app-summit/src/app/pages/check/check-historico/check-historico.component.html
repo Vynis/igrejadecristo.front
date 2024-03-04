@@ -1,0 +1,14 @@
+<app-navbar [titulo]="'Histórico de Check-In'" >
+  <ion-buttons slot="end">
+    <ion-button (click)="dismiss()" >Fechar</ion-button>
+  </ion-buttons>
+</app-navbar>
+
+<ion-content  [scrollEvents]="true" padding>
+  <ion-list  lines="full">
+    <ion-item *ngFor="let historico of listaPresencaUsuario" style="font-size: 12px;"  >
+      <ion-icon color="success" name="checkbox-outline"></ion-icon>&nbsp;
+      <ion-label>{{ historico.dataRegistro | date: 'dd/MM/yyyy HH:mm' }} - {{ historico.processoInscricao.curso.titulo }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
