@@ -25,7 +25,8 @@
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Data de Nascimento</ion-label>
-              <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Ex: 00/00/0000" formControlName="dataNascimento" cancelText="Cancelar"  doneText="Concluir" required></ion-datetime>
+              <ion-input type="text" [maskito]="options" [maskitoElement]="maskPredicate"  placeholder="Ex: 04/03/2024"  formControlName="dataNascimento" required></ion-input>
+              <!-- <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Ex: 00/00/0000" formControlName="dataNascimento" cancelText="Cancelar"  doneText="Concluir" required></ion-datetime> -->
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Celular</ion-label>

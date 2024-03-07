@@ -8,6 +8,7 @@ import { RegisterPageRoutingModule } from './register-routing.module';
 
 import { RegisterPage } from './register.page';
 import { UsuarioService } from 'src/app/core/_services/usuario.service';
+import { MaskitoDirective } from '@maskito/angular';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { UsuarioService } from 'src/app/core/_services/usuario.service';
     FormsModule,
     IonicModule,
     RegisterPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaskitoDirective
   ],
   declarations: [RegisterPage],
   providers: [UsuarioService]

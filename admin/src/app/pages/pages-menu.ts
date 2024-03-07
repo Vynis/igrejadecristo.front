@@ -27,7 +27,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Presença Alunos',
-        link: '/pages/relatorios'
+        link: '/pages/relatorios/relatorio-presenca'
       }
     ]
   }

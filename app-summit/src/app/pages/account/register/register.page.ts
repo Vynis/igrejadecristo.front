@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Usuario } from 'src/app/core/_models/usurario.model';
 import { ConfirmPasswordValidator } from 'src/app/core/utils/confirm-password.validator';
+import type { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
+import mask from './mask';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +14,10 @@ import { ConfirmPasswordValidator } from 'src/app/core/utils/confirm-password.va
 })
 export class RegisterPage implements OnInit {
   form: FormGroup;
+  options: MaskitoOptions = mask;
+  readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
+
+
   constructor(
     public fb: FormBuilder,
     private toastCtrl: ToastController,
@@ -40,14 +46,17 @@ export class RegisterPage implements OnInit {
   }
 
   prepararModel() : Usuario {
+    debugger;
+    var formatter = new Intl.DateTimeFormat('pt-BR');
     const controls = this.form.controls;
+
+    console.log(controls.dataNascimento.value);
 
     const _usuario = new Usuario();
 
     _usuario.id = 0
     _usuario.nome = controls.nome.value;
-    _usuario.dataNascimento = controls.dataNascimento.value;
-    _usuario.dataNascimento = controls.dataNascimento.value;
+    _usuario.dataNascimento = new Date(formatter.format(controls.dataNascimento.value));
     _usuario.email = controls.email.value;
     _usuario.telefoneCelular = controls.telefoneCelular.value;
     _usuario.telefoneFixo = controls.telefoneFixo.value;

@@ -20,14 +20,18 @@ const routes: Routes = [
     canActivate: [AuthorizedGuard],
     loadChildren: () => import('./pages/checkout/checkout.module').then(m => m.CheckoutModule)
   },
-  {
-    path: '',
-    canActivate: [AuthorizedGuard],
-    loadChildren: () => import('./pages/tablinks/tablinks.module').then( m => m.TablinksPageModule)
-  },
+  // {
+  //   path: '',
+  //   canActivate: [AuthorizedGuard],
+  //   loadChildren: () => import('./pages/tablinks/tablinks.module').then( m => m.TablinksPageModule)
+  // },
   {
     path: 'reset',
     loadChildren: () => import('./pages/account/reset/reset.module').then( m => m.ResetPageModule)
+  },
+  {
+    path: 'splash',
+    loadChildren: () => import('./pages/splash/splash.module').then( m => m.SplashPageModule)
   },
 
 

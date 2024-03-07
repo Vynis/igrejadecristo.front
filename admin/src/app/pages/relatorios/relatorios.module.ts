@@ -9,6 +9,8 @@ import { ComponentsModule } from '../components/components.module';
 import { RelatoriosInscricoesComponent } from './relatorios-inscricoes/relatorios-inscricoes.component';
 import { RelatorioService } from '../../@core/services/relatorio.service';
 import { InterceptService } from '../../@core/utils/intercept.service';
+import { RelatoriosPresencaComponent } from './relatorios-presenca/relatorios-presenca.component';
+import { ProcessoInscricaoService } from '../../@core/services/processo-inscricao.service';
 
 const routes: Routes = [
 	{
@@ -23,6 +25,10 @@ const routes: Routes = [
       {
         path: 'relatorio-inscricoes',
         component: RelatoriosInscricoesComponent
+      },
+      {
+        path: 'relatorio-presenca',
+        component: RelatoriosPresencaComponent
       }
 		]
 	}
@@ -43,7 +49,7 @@ const routes: Routes = [
     ComponentsModule,
     NbAlertModule
   ],
-  declarations: [RelatoriosComponent, RelatoriosInscricoesComponent],
+  declarations: [RelatoriosComponent, RelatoriosInscricoesComponent, RelatoriosPresencaComponent],
   providers: [
     InterceptService,
     {
@@ -51,7 +57,8 @@ const routes: Routes = [
         useClass: InterceptService,
       multi: true
     },
-    RelatorioService
+    RelatorioService,
+    ProcessoInscricaoService
   ]
 })
 export class RelatoriosModule { }

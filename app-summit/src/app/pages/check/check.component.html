@@ -12,9 +12,9 @@
       <ion-col size-md="12">
         <ion-button (click)="presentModal()" expand="full">
           <ion-icon  name="reader-outline"></ion-icon>
-           Histórico
+           Histórico.
         </ion-button>
-        <ion-text *ngIf="listaInscricaoCurso.length == 0">
+        <ion-text *ngIf="listaInscricaoCurso.length === 0">
           <h2>Nenhum curso disponível para realização do check in...</h2>
         </ion-text>
         <ion-card *ngFor="let lista of listaInscricaoCurso">

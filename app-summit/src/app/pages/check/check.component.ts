@@ -3,6 +3,7 @@ import { AlertController, LoadingController, ModalController, ToastController } 
 import { ProcessoInscricao } from 'src/app/core/_models/processoInscricao.model';
 import { CheckUsuarioService } from 'src/app/core/_services/check-usuario.service';
 import { CheckHistoricoComponent } from './check-historico/check-historico.component';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'app-check',
@@ -71,37 +72,66 @@ export class CheckComponent implements OnInit {
 
   }
 
-  capturaGeoLocalizacaoUsuario() {
+  async capturaGeoLocalizacaoUsuario() {
 
-    if ("geolocation" in navigator) {
+    // const request = await Geolocation.requestPermissions();
+    // console.log('Request', request);
+
+    const verifica = await Geolocation.checkPermissions();
+    console.log('Verifica Permissao', verifica);
+
+    if (verifica.location !== 'denied'){
+      const coordinates = await Geolocation.getCurrentPosition();
+  
       var latitude = 0;
       var longitude =0;
 
-      const getPosition = positon =>  {
-          latitude=  positon.coords.latitude;
-          longitude= positon.coords.longitude;
+      latitude = coordinates.coords.latitude;
+      longitude = coordinates.coords.longitude;
 
-          console.log(`Lat: ${latitude} Lng: ${longitude}`);
+      this.checkUsuarioService.cadastrarLocalizacaoUsuario(latitude.toString(), longitude.toString()).subscribe(res => {
+      if (!res.success)
+        alert(res.dados);
 
-         this.checkUsuarioService.cadastrarLocalizacaoUsuario(latitude.toString(), longitude.toString()).subscribe(res => {
-            if (!res.success)
-              alert(res.dados);
+      console.log(res);  
+    })
 
-            console.log(res);  
-         })
-
-      }
-
-      const geoError = error => {
-        console.log(error)
-      }
-
-      navigator.geolocation.getCurrentPosition(getPosition,geoError);
-
-    } else {
-      alert("Lamento, mas os serviços de geolocalização não são suportados pelo seu navegador.",
-      );
     }
+    else {
+      this.showMessage("Lamento, mas os serviços de geolocalização não são suportados pelo seu navegador.");
+    }
+
+
+
+    // if ("geolocation" in navigator) {
+    //   var latitude = 0;
+    //   var longitude =0;
+
+    //   const getPosition = positon =>  {
+    //       latitude=  positon.coords.latitude;
+    //       longitude= positon.coords.longitude;
+
+    //       console.log(`Lat: ${latitude} Lng: ${longitude}`);
+
+    //      this.checkUsuarioService.cadastrarLocalizacaoUsuario(latitude.toString(), longitude.toString()).subscribe(res => {
+    //         if (!res.success)
+    //           alert(res.dados);
+
+    //         console.log(res);  
+    //      })
+
+    //   }
+
+    //   const geoError = error => {
+    //     console.log(error)
+    //   }
+
+    //   navigator.geolocation.getCurrentPosition(getPosition,geoError);
+
+    // } else {
+    //   this.showMessage("Lamento, mas os serviços de geolocalização não são suportados pelo seu navegador.",
+    //   );
+    // }
   }
 
   async mensagemConfirmacao() {
