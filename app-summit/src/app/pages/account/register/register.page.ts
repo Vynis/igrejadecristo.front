@@ -46,17 +46,16 @@ export class RegisterPage implements OnInit {
   }
 
   prepararModel() : Usuario {
-    debugger;
-    var formatter = new Intl.DateTimeFormat('pt-BR');
     const controls = this.form.controls;
 
-    console.log(controls.dataNascimento.value);
-
+    var dataNasimento = (controls.dataNascimento.value).split('/');
+    var dataNascimentoFormatada = `${dataNasimento[1]}/${dataNasimento[0]}/${dataNasimento[2]}`;
+    
     const _usuario = new Usuario();
 
     _usuario.id = 0
     _usuario.nome = controls.nome.value;
-    _usuario.dataNascimento = new Date(formatter.format(controls.dataNascimento.value));
+    _usuario.dataNascimento = new Date(dataNascimentoFormatada);
     _usuario.email = controls.email.value;
     _usuario.telefoneCelular = controls.telefoneCelular.value;
     _usuario.telefoneFixo = controls.telefoneFixo.value;
@@ -69,6 +68,14 @@ export class RegisterPage implements OnInit {
   async submit() {
     if (this.form.invalid)
       return;
+
+      const controls = this.form.controls;
+
+      if (controls.dataNascimento.value.length !== 10) {
+        this.showMessage('Data de Nascimento inválida!');
+        return;
+      }
+        
   
       const loading = await this.loadCtrl.create({ message: 'Realizando o cadastro...' });
       loading.present();

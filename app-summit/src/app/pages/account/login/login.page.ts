@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/core/_services/auth.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage  {
   public hide = true;
   public form: FormGroup;
 
@@ -31,10 +31,6 @@ export class LoginPage implements OnInit {
 			],
 			password: ['', Validators.required]
 		});
-  }
-
-  ngOnInit() {
-
   }
 
   toggleHide() {
