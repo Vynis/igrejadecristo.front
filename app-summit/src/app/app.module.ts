@@ -11,6 +11,7 @@ import { ComponentsModule } from './components/components.module';
 import { InterceptService } from './core/utils/intercept.service';
 import { AuthorizedGuard } from './pages/guards/authorized.guard';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,8 +26,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 			provide: HTTP_INTERCEPTORS,
 			useClass: InterceptService,
 			multi: true
-		}],
-  
+		}, FingerprintAIO],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
