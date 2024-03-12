@@ -1,6 +1,6 @@
 {
 	"appId": "br.com.igrejadecristo.appsummit",
-	"appName": "app-summit",
+	"appName": "Summit Academy",
 	"webDir": "www",
 	"server": {
 		"androidScheme": "https"
