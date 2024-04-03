@@ -215,4 +215,6 @@ export class InscricoesAbertasPage implements OnInit {
     return await modal.present();
   }
 
+
+
 }

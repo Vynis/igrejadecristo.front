@@ -1,0 +1,122 @@
+<div class="row">
+  <div class="col-md-12">
+    <form *ngIf="listaAulas" [formGroup]="formulario">
+     <nb-card> 
+      <nb-card-header>
+        Filtro
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-sm-12">
+            <label for="dataAula" class="label">Data Aula</label><br>
+            <nb-select id="dataAula" formControlName="dataAula" fullWidth  selected="A">
+              <nb-option *ngFor="let list of listaAulas" [value]="list.dataAula">{{list.dataAula | date: 'dd/MM/yyyy' }}</nb-option>
+            </nb-select>
+        </div>
+        </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <button (click)="buscarPresencas()" type="submit" nbButton status="primary">Filtrar</button>
+      </nb-card-footer>
+     </nb-card>
+    </form>
+      <nb-card>
+        <nb-card-header>
+          Presença dos Alunos
+        </nb-card-header>
+        <nb-card-body>
+          <nb-tabset>
+            <nb-tab tabTitle="Todos ({{contTodos}})">
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="titulo" class="label">Pesquisar</label>
+                    <input type="text" class="form-control" placeholder="" (keyup)="onKeyTodos($event)" >
+                  </div>
+                </div>
+              </div>
+
+              <nb-card *ngFor="let dados of listaTodasPresencas" accent="info">
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-md-8">
+                        <h6>{{dados.nome}}</h6> <br />
+                        Email: {{dados.email}} <br /><br />
+                        Curso: {{dados.curso}}
+
+                    </div>
+                    <div class="col-md-4">
+                      <br /><br />
+
+                      <button *ngIf="dados.status === 'N'" (click)="realizarCheckIn(dados)"  type="submit" nbButton status="success">Fazer Check-In</button>
+                      <button *ngIf="dados.status === 'P'" (click)="desfazerCheckIn(dados)" type="submit" nbButton status="danger">Desfazer Check-In</button>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+
+
+            </nb-tab>
+            <nb-tab tabTitle="Realizados ({{contRealizados}})">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="titulo" class="label">Pesquisar</label>
+                    <input type="text" class="form-control" placeholder="" (keyup)="onKeyRealizados($event)" >
+                  </div>
+                </div>
+              </div>
+              <nb-card *ngFor="let dados of listaRealizados" accent="info">
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-md-8">
+                        <h6>{{dados.nome}}</h6> <br />
+                        Email: {{dados.email}} <br /><br />
+                        Curso: {{dados.curso}}
+
+                    </div>
+                    <div class="col-md-4">
+                      <br /><br />
+
+                      <button *ngIf="dados.status === 'N'" (click)="realizarCheckIn(dados)" type="submit" nbButton status="success">Fazer Check-In</button>
+                      <button *ngIf="dados.status === 'P'" (click)="desfazerCheckIn(dados)" type="submit" nbButton status="danger">Desfazer Check-In</button>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </nb-tab>
+            <nb-tab tabTitle="Restantes ({{contRestantes}})">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="titulo" class="label">Pesquisar</label>
+                    <input type="text" class="form-control" placeholder="" (keyup)="onKeyRestantes($event)" >
+                  </div>
+                </div>
+              </div>
+              <nb-card *ngFor="let dados of listaNaoRealizados" accent="info">
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-md-8">
+                        <h6>{{dados.nome}}</h6> <br />
+                        Email: {{dados.email}} <br /><br />
+                        Curso: {{dados.curso}}
+
+                    </div>
+                    <div class="col-md-4">
+                      <br /><br />
+
+                      <button *ngIf="dados.status === 'N'" (click)="realizarCheckIn(dados)" type="submit" nbButton status="success">Fazer Check-In</button>
+                      <button *ngIf="dados.status === 'P'" (click)="desfazerCheckIn(dados)" type="submit" nbButton status="danger">Desfazer Check-In</button>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </nb-tab>
+          </nb-tabset>
+        </nb-card-body>
+      </nb-card>
+   
+  </div>
+</div>

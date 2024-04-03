@@ -10,7 +10,7 @@
         <ion-row>
           <ion-col size-md="12">
             <ion-searchbar *ngIf="listaInscricoesAbertasBackup.length > 0"  placeholder="Pesquisar" showcancelbutton="" (ionInput)="filtro($event)" ></ion-searchbar>
-            <ion-text *ngIf="listaInscricoesAbertasBackup.length == 0">
+            <ion-text *ngIf="listaInscricoesAbertasBackup.length === 0">
                 <h2>No momento não possui inscrições abertas...</h2>
               </ion-text>
             <ion-card *ngFor="let lista of listaInscricoesAbertas">
@@ -19,8 +19,8 @@
               </ion-card-header>
             
               <ion-card-content>
-                {{lista.curso.descricao}} <br>
-                <p>Perído de Inscrição: <b> {{ lista.dataInicial | date:"dd/MM/yyyy"}} até {{ lista.dataFinal | date: "dd/MM/yyyy"}} </b> </p>
+                <div [innerHTML]="lista.descricao" ></div> <br>
+                <p>Período de Inscrição: <b> {{ lista.dataInicial | date:"dd/MM/yyyy"}} até {{ lista.dataFinal | date: "dd/MM/yyyy"}} </b> </p>
                 <!-- <em>Investimento: <b>{{	lista.tipo == 'P' ? (lista.valor | currency:'BRL':true ) + ' (Cartão) ou ' + (lista.valorPixBoleto | currency:'BRL':true ) + ' (Pix ou Boleto)'  : 'Gratuito' }}</b></em> <br>	 -->
                 <em>Investimento: <b>{{lista.descricaoPagto}}</b></em> <br>
                 <ion-button (click)="inscrever(lista.id)" >Inscrever</ion-button>

@@ -77,6 +77,10 @@ const routes: Routes = [{
       loadChildren: () => import('./relatorios/relatorios.module').then(m => m.RelatoriosModule),
     },
     {
+      path: 'presenca-alunos',
+      loadChildren: () => import('./presensa-alunos/presensa-alunos.module').then(m => m.PresensaAlunosModule),
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

@@ -15,7 +15,9 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,ComponentsModule, ServiceWorkerModule.register('ngsw-worker.js', {
+  imports: [BrowserModule, IonicModule.forRoot({
+    innerHTMLTemplatesEnabled: true
+  }), AppRoutingModule, HttpClientModule,ComponentsModule, ServiceWorkerModule.register('ngsw-worker.js', {
   enabled: !isDevMode(),
   // Register the ServiceWorker as soon as the application is stable
   // or after 30 seconds (whichever comes first).

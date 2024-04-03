@@ -8,6 +8,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "buildprod": "ng build --configuration production --base-href /app/",
     "test": "ng test",
     "lint": "ng lint",
     "prodweb" : "ng build --configuration production --base-href /app/"

@@ -17,4 +17,5 @@ export class ProcessoInscricao {
     dataFinalVisualizacaoCurso: Date;
     naoTemDataVisualizacao: boolean;
     descricaoPagto: string;
+    descricao: string;
 }
