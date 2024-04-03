@@ -10,6 +10,6 @@
 
 export const environment = {
   production: false,
-  api: 'https://www.igrejadecristobrasil.app.br/api/'
-  //api: 'http://localhost:5555/api'
+  //api: 'https://www.igrejadecristobrasil.app.br/api/'
+  api: 'http://localhost:5555/api'
 };

@@ -1,0 +1,7 @@
+{
+  "name": "app-summit",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
