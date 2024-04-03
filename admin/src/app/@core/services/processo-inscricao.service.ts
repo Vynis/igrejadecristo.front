@@ -17,6 +17,10 @@ export class ProcessoInscricaoService {
     return this.http.get<ModeloBase>(`${this.caminhoApi}/processo-inscricao/buscar-ciclos`)
   }
 
+  buscarInscricoesAtivas() {
+    return this.http.get<ModeloBase>(`${this.caminhoApi}/processo-inscricao/busca-inscricoes-ativos`)
+  }
+
 
 
 }

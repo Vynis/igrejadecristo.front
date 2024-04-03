@@ -1,0 +1,55 @@
+<form  [formGroup]="formulario">
+  <nb-card>
+    <nb-card-header>
+     <h5>Filtro</h5> 
+    </nb-card-header>
+    <nb-card-body>
+      
+        <div class="row">
+          <div class="col-sm-12">
+            <label for="curso" class="label">Curso</label>
+            <nb-select placeholder="Selecione" fullWidth formControlName="curso" >
+              <nb-option *ngFor="let an of listaProcessoInscricoes" [value]="an.id">{{an.curso.titulo}} - Ciclo: {{ an.ciclo }}/{{an.ano}}</nb-option>
+            </nb-select>
+          </div>
+        </div>  
+          
+      
+    </nb-card-body>
+    <nb-card-footer>
+      <button type="submit" (click)="obterDadosGrid()" nbButton status="primary">Filtrar</button>
+    </nb-card-footer>
+  </nb-card>
+  </form>
+
+  <nb-card *ngIf="listaCabecalhoTabela.length > 0">
+    <nb-card-header>
+      <div class="row">
+        <div class="col-sm-10" style="padding-top: 15px;">
+          <h5>Lista de Presença de Alunos</h5>
+        </div>
+        <div class="col-sm-2" style="text-align: right">
+          <a  nbButton status="success" (click)="downloadExcel()" >Exportar para Excel</a>
+        </div>
+      </div>
+
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-md-12" >
+          <table  class="table table-striped">
+              <thead>
+                <tr style="font-weight: bold;">
+                    <td *ngFor="let col of listaCabecalhoTabela ">{{col}}</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of listaPresencaAlunos; let j = $index">
+                  <td *ngFor="let col of listaCabecalhoTabela; let  i = $index">{{ formataValorTexto(row,col)  }}</td>
+                </tr>
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </nb-card-body> 
+  </nb-card>

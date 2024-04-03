@@ -34,4 +34,12 @@ export class RelatorioService {
     return this.http.post(`${this.caminhoApi}/relatorio/download-relatorio-inscricoes`, filtro, { responseType: 'arraybuffer' })
   }
 
+  buscaRelatorioPresencaAlunos(ciclo: number, ano: number, processoInscricao: number) {
+    return this.http.get<ModeloBase>(`${this.caminhoApi}/relatorio/relatorio-presenca-alunos/${ciclo}/${ano}/${processoInscricao}`)
+  }
+
+  dowloadRelatorioPresencaAlunos(ciclo: number, ano: number, processoInscricao: number){
+    return this.http.post(`${this.caminhoApi}/relatorio/download-relatorio-presenca-alunos/?ciclo=${ciclo}&ano=${ano}&processoInscricao=${processoInscricao}`,  null, { responseType: 'arraybuffer' })
+  }
+
 }

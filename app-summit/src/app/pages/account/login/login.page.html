@@ -1,0 +1,51 @@
+<ion-content [scrollEvents]="true" padding>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col size-md="12">
+        <form [formGroup]="form">
+          <br>
+          <p class="animated fadeIn" class="ion-text-center">
+            <img src="assets/icon/logo_2.png" alt="Summit Academy"  >
+          </p>
+          <br>
+          <ion-list lines="none" class="animated fadeIn">
+            <ion-item>
+              <ion-input type="text"  placeholder="E-mail ou Cpf" formControlName="email"
+                autocomplete="username" (keyup.enter)="submit()">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input [type]="hide ? 'password' : 'text'" placeholder="Senha" formControlName="password"
+                autocomplete="password" (keyup.enter)="submit()">
+              </ion-input>
+              <ion-icon  class="clickable" [name]="hide ? 'eye' : 'eye-off'" (click)="toggleHide()">
+              </ion-icon>
+            </ion-item>
+          </ion-list>
+          <br>
+          <ion-button  expand="full" size="large" class="animated fadeIn" [disabled]="!form.valid"
+            (click)="submit()">
+            Entrar
+          </ion-button>
+          <ion-button  fill="clear" expand="full" class="animated fadeIn" (click)="resetPassword()">ESQUECI
+            MINHA SENHA
+          </ion-button>
+          <br>
+          <ion-button [routerLink]="['/register']"  expand="full" size="large" class="animated fadeIn" color="success">
+          Realize seu cadastro
+         </ion-button>
+
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <p class="animated fadeIn" class="ion-text-center">
+      <img src="assets/icon/logo-igreja-light.png" alt="Igreja de Cristo"  ><br />
+      <b>Versão 1.0.5</b>
+    </p>
+  </ion-toolbar>
+</ion-footer>

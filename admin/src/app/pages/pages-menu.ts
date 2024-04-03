@@ -13,6 +13,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/cursos',
     home: true,
   },
+  {
+    title: 'Presença alunos',
+    icon: 'edit-2-outline',
+    link: '/pages/presenca-alunos',
+    home: true,
+  },
   // {
   //   title: 'Relatorios',
   //   group: true,
@@ -23,11 +29,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Inscrições',
-        link: '/pages/relatorios'
+        link: '/pages/relatorios',
       },
       {
         title: 'Presença Alunos',
-        link: '/pages/relatorios'
+        link: '/pages/relatorios/relatorio-presenca'
       }
     ]
   }
