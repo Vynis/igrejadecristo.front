@@ -14,6 +14,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
+    title: 'Processo Inscrição',
+    icon: 'calendar-outline',
+    link: '/pages/processo-inscricao',
+    home: true,
+  },
+  {
+    title: 'Usuários',
+    icon: 'people-outline',
+    link: '/pages/usuarios',
+    home: true,
+  },
+  {
     title: 'Presença alunos',
     icon: 'edit-2-outline',
     link: '/pages/presenca-alunos',

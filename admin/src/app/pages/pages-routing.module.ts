@@ -73,6 +73,14 @@ const routes: Routes = [{
       loadChildren: () => import('./cursos/cursos.module').then(m => m.CursosModule),
     },
     {
+      path: 'processo-inscricao',
+      loadChildren: () => import('./processo-inscricao/processo-inscricao.module').then(m => m.ProcessoInscricaoModule),
+    },
+    {
+      path: 'usuarios',
+      loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule),
+    },
+    {
       path: 'relatorios',
       loadChildren: () => import('./relatorios/relatorios.module').then(m => m.RelatoriosModule),
     },

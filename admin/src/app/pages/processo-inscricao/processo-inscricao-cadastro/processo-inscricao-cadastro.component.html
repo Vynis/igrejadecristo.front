@@ -1,0 +1,149 @@
+<div class="row">
+  <div class="col-md-12">
+    <form *ngIf="processoInscricao" [formGroup]="formulario">
+      <nb-card>
+        <nb-card-header>
+          <h5>{{tituloPagina}}</h5>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-4">
+              <label for="cursoId" class="label">Curso</label>
+              <nb-select fullWidth id="cursoId" formControlName="cursoId">
+                <nb-option [value]="null">Selecione</nb-option>
+                <nb-option *ngFor="let curso of listaCursos" [value]="curso.id">{{curso.titulo}}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-2">
+              <label for="status" class="label">Status</label>
+              <nb-select fullWidth id="status" formControlName="status">
+                <nb-option value="A">Ativo</nb-option>
+                <nb-option value="I">Inativo</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-2">
+              <label for="tipo" class="label">Tipo</label>
+              <nb-select fullWidth id="tipo" formControlName="tipo">
+                <nb-option value="G">Gratuito</nb-option>
+                <nb-option value="P">Pago</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-2">
+              <label for="configuraPeriodo" class="label">Config. Período</label>
+              <nb-select fullWidth id="configuraPeriodo" formControlName="configuraPeriodo">
+                <nb-option value="S">Sim</nb-option>
+                <nb-option value="N">Não</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-1">
+              <label for="ciclo" class="label">Ciclo</label>
+              <input type="text" class="form-control" nbInput fullWidth id="ciclo" formControlName="ciclo">
+            </div>
+            <div class="col-sm-1">
+              <label for="ano" class="label">Ano</label>
+              <input type="text" class="form-control" nbInput fullWidth id="ano" formControlName="ano">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-3">
+              <label for="dataInicial" class="label">Data Inicial</label>
+              <input type="datetime-local" class="form-control" id="dataInicial" formControlName="dataInicial">
+            </div>
+            <div class="col-sm-3">
+              <label for="dataFinal" class="label">Data Final</label>
+              <input type="datetime-local" class="form-control" id="dataFinal" formControlName="dataFinal">
+            </div>
+            <div class="col-sm-2">
+              <label for="valor" class="label">Valor</label>
+              <input type="number" step="0.01" class="form-control" id="valor" formControlName="valor">
+            </div>
+            <div class="col-sm-2">
+              <label for="valorPixBoleto" class="label">Valor Pix/Boleto</label>
+              <input type="number" step="0.01" class="form-control" id="valorPixBoleto" formControlName="valorPixBoleto">
+            </div>
+            <div class="col-sm-2">
+              <label for="limiteVagas" class="label">Limite Vagas</label>
+              <input type="number" class="form-control" id="limiteVagas" formControlName="limiteVagas">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-3">
+              <label for="dataInicalPagto" class="label">Início Pagamento</label>
+              <input type="datetime-local" class="form-control" id="dataInicalPagto" formControlName="dataInicalPagto">
+            </div>
+            <div class="col-sm-3">
+              <label for="dataFinalPagto" class="label">Fim Pagamento</label>
+              <input type="datetime-local" class="form-control" id="dataFinalPagto" formControlName="dataFinalPagto">
+            </div>
+            <div class="col-sm-3">
+              <label for="dataInicioVisualizacaoCurso" class="label">Início Visualização Curso</label>
+              <input type="datetime-local" class="form-control" id="dataInicioVisualizacaoCurso" formControlName="dataInicioVisualizacaoCurso">
+            </div>
+            <div class="col-sm-3">
+              <label for="dataFinalVisualizacaoCurso" class="label">Fim Visualização Curso</label>
+              <input type="datetime-local" class="form-control" id="dataFinalVisualizacaoCurso" formControlName="dataFinalVisualizacaoCurso">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-3">
+              <label for="diaSemanaCurso" class="label">Dia Semana Curso</label>
+              <nb-select fullWidth id="diaSemanaCurso" formControlName="diaSemanaCurso">
+                <nb-option value="DOM">Domingo</nb-option>
+                <nb-option value="SEG">Segunda</nb-option>
+                <nb-option value="TER">Terça</nb-option>
+                <nb-option value="QUA">Quarta</nb-option>
+                <nb-option value="QUI">Quinta</nb-option>
+                <nb-option value="SEX">Sexta</nb-option>
+                <nb-option value="SAB">Sábado</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-2">
+              <label for="horarioListaPresencaInicial" class="label">Início Check-in</label>
+              <input type="time" class="form-control" id="horarioListaPresencaInicial" formControlName="horarioListaPresencaInicial">
+            </div>
+            <div class="col-sm-2">
+              <label for="horarioListaPresencaFinal" class="label">Fim Check-in</label>
+              <input type="time" class="form-control" id="horarioListaPresencaFinal" formControlName="horarioListaPresencaFinal">
+            </div>
+            <div class="col-sm-2">
+              <label for="dataInicioPresencial" class="label">Início Presencial</label>
+              <input type="datetime-local" class="form-control" id="dataInicioPresencial" formControlName="dataInicioPresencial">
+            </div>
+            <div class="col-sm-3">
+              <label for="dataFinalPresencial" class="label">Fim Presencial</label>
+              <input type="datetime-local" class="form-control" id="dataFinalPresencial" formControlName="dataFinalPresencial">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-12">
+              <label for="descricaoPagto" class="label">Descrição Pagamento</label>
+              <textarea rows="2" class="form-control" id="descricaoPagto" formControlName="descricaoPagto"></textarea>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-12">
+              <label for="descricao" class="label">Descrição</label>
+              <textarea rows="3" class="form-control" id="descricao" formControlName="descricao"></textarea>
+            </div>
+          </div>
+        </nb-card-body>
+
+        <nb-card-footer>
+          <div class="row">
+            <div class="col-sm-1">
+              <button (click)="salvar()" type="submit" nbButton status="success">Enviar</button>
+            </div>
+            <div class="col-sm-1">
+              <a ghost nbButton status="danger" routerLink="/pages/processo-inscricao/lista">Voltar</a>
+            </div>
+          </div>
+        </nb-card-footer>
+      </nb-card>
+    </form>
+  </div>
+</div>

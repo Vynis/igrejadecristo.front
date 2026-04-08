@@ -1,38 +1,60 @@
-<div class="row">
-  <div class="col-xxl-5">
-    <div class="row">
+<nb-card>
+  <nb-card-header>
+    <div class="row align-items-center">
       <div class="col-md-6">
-        <ngx-profit-card></ngx-profit-card>
+        <h6 style="margin: 0;">Dashboard de Inscrições</h6>
       </div>
-      <div class="col-md-6">
-        <ngx-earning-card></ngx-earning-card>
+      <div class="col-md-6 text-md-right" style="margin-top: 10px; margin-bottom: 10px;">
+        <nb-select [selected]="filtroSelecionado" (selectedChange)="onChangeFiltro($event)" status="primary">
+          <nb-option *ngFor="let item of filtros" [value]="item.key">{{ item.descricao }}</nb-option>
+        </nb-select>
       </div>
     </div>
-
-    <ngx-traffic-reveal-card></ngx-traffic-reveal-card>
-  </div>
-
-  <div class="col-xxl-7">
-    <ngx-ecommerce-charts></ngx-ecommerce-charts>
-  </div>
-</div>
+  </nb-card-header>
+</nb-card>
 
 <div class="row">
-  <div class="col-xxl-9">
-    <ngx-country-orders></ngx-country-orders>
+  <div class="col-xxxl-2 col-xl-3 col-md-4 col-sm-6" *ngFor="let card of cards">
+    <nb-card [status]="card.status">
+      <nb-card-body>
+        <div class="kpi-title">{{ card.titulo }}</div>
+        <div class="kpi-value">{{ card.valor }}</div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<div class="row" *ngIf="!carregando">
+  <div class="col-xl-6">
+    <nb-card>
+      <nb-card-header>Inscrições por Curso</nb-card-header>
+      <nb-card-body>
+        <div echarts [options]="graficoCursos" class="dashboard-chart"></div>
+      </nb-card-body>
+    </nb-card>
   </div>
 
-  <div class="col-xxl-3">
-    <ngx-progress-section></ngx-progress-section>
+  <div class="col-xl-6">
+    <nb-card>
+      <nb-card-header>Inscrições por Congregação</nb-card-header>
+      <nb-card-body>
+        <div echarts [options]="graficoCongregacoes" class="dashboard-chart"></div>
+      </nb-card-body>
+    </nb-card>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-xxl-9">
-    <ngx-ecommerce-visitors-analytics></ngx-ecommerce-visitors-analytics>
-  </div>
-
-  <div class="col-xxl-3">
-    <ngx-user-activity></ngx-user-activity>
+<div class="row" *ngIf="!carregando">
+  <div class="col-xl-6">
+    <nb-card>
+      <nb-card-header>Status das Inscrições</nb-card-header>
+      <nb-card-body>
+        <div echarts [options]="graficoStatus" class="dashboard-chart"></div>
+      </nb-card-body>
+    </nb-card>
   </div>
 </div>
+
+<nb-card *ngIf="carregando">
+  <nb-card-body>Carregando dados do dashboard...</nb-card-body>
+</nb-card>

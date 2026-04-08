@@ -1,0 +1,34 @@
+<nb-card>
+  <nb-card-header>
+    <h5>Filtro</h5>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="form-inline">
+      <nb-select [selected]="filtroCicloAnoSelecionado" (selectedChange)="filtroCicloAnoSelecionado = $event" style="min-width: 180px;">
+        <nb-option *ngFor="let item of filtrosCicloAno" [value]="item.key">{{ item.descricao }}</nb-option>
+      </nb-select>
+      <select #filtroStatus class="form-control" style="margin-left: 10px; width: 140px;">
+        <option value="">Status</option>
+        <option value="A">Ativo</option>
+        <option value="I">Inativo</option>
+      </select>
+      <button type="submit" (click)="obterDadosGrid()" nbButton status="primary" style="margin-left: 10px;">Filtrar</button>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-10" style="padding-top: 15px;">
+        <h5>Lista de Processos de Inscrição</h5>
+      </div>
+      <div class="col-sm-2" style="text-align: right">
+        <a nbButton status="primary" routerLink="../cadastro">Novo</a>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <app-grid-view [colunas]="colunas" [acoes]="acoes" [dadosTabela]="dadosTabela"></app-grid-view>
+  </nb-card-body>
+</nb-card>
