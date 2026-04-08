@@ -26,7 +26,6 @@
             <span *ngIf="!(dataAtual >= lista.processoInscricao.dataInicioVisualizacaoCurso && dataAtual <= lista.processoInscricao.dataFinalVisualizacaoCurso) && !(lista.processoInscricao.dataInicioVisualizacaoCurso >= dataAtual) && lista.processoInscricao.naoTemDataVisualizacao ">
               <br><em style="color: red;">Periodo de visualização concluído! {{lista.processoInscricao.dataInicioVisualizacaoCurso}}</em>
             </span>
-            <!-- <ion-progress-bar color="primary" value="0.5"></ion-progress-bar> -->
             <ion-button [routerLink]="['/curso/' + lista.id]" *ngIf="lista.status === 'CO' && ( dataAtual >= lista.processoInscricao.dataInicioVisualizacaoCurso && dataAtual <= lista.processoInscricao.dataFinalVisualizacaoCurso)" >Acessar</ion-button>
             <ion-button (click)="presentModal(lista)" *ngIf="lista.status === 'AG' && ( dataAtual >= lista.processoInscricao.dataInicalPagto && dataAtual <= lista.processoInscricao.dataFinalPagto) && lista.processoInscricao.tipo === 'P'" color="success">
               <ion-icon name="wallet-outline"></ion-icon>&nbsp;

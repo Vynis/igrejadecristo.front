@@ -139,7 +139,7 @@ export class CheckComponent implements OnInit {
       cssClass: 'my-custom-class',
       header: 'Parabéns',
       subHeader: '',
-      message: `Parabéns seu check in foi realizado com sucesso!`,
+      message: `Parabéns seu check in foi realizado com sucesso!!`,
       buttons: ['OK']
     });
 
