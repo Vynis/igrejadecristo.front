@@ -27,7 +27,7 @@ export class ProcessoInscricaoModel {
   qtdInscricoesTotal: number;
   qtdInscricoesConfirmadas: number;
   qtdInscricoesCanceladas: number;
-  curso: CursoModel = new CursoModel();
+  curso: CursoModel;
 
   constructor() {
     this.id = 0;

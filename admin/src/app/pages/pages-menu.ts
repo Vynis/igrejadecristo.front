@@ -31,6 +31,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/presenca-alunos',
     home: true,
   },
+  {
+    title: 'Pequenos Grupos',
+    icon: 'people-outline',
+    link: '/pages/pequenos-grupos',
+    home: true,
+  },
   // {
   //   title: 'Relatorios',
   //   group: true,

@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Meu PG</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card *ngIf="dados?.pequenoGrupo">
+    <ion-card-header>
+      <ion-card-subtitle>Pequeno Grupo</ion-card-subtitle>
+      <ion-card-title>{{ dados.pequenoGrupo.nome }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Dia:</strong> {{ dados.pequenoGrupo.diaSemana || 'Não informado' }}</p>
+      <p><strong>Horário:</strong> {{ dados.pequenoGrupo.horarioReuniao || 'Não informado' }}</p>
+      <p><strong>CEP:</strong> {{ dados.pequenoGrupo.cep || 'Não informado' }}</p>
+      <p><strong>Endereço:</strong> {{ dados.pequenoGrupo.endereco || 'Não informado' }}</p>
+      <p><strong>Número:</strong> {{ dados.pequenoGrupo.numero || 'Não informado' }}</p>
+      <p><strong>Complemento:</strong> {{ dados.pequenoGrupo.complemento || 'Não informado' }}</p>
+      <p><strong>Bairro:</strong> {{ dados.pequenoGrupo.bairro || 'Não informado' }}</p>
+      <p><strong>Cidade/UF:</strong> {{ dados.pequenoGrupo.cidade || 'Não informado' }}{{ dados.pequenoGrupo.estado ? '/' + dados.pequenoGrupo.estado : '' }}</p>
+      <p><strong>Líder:</strong> {{ dados.usuario?.nome }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
