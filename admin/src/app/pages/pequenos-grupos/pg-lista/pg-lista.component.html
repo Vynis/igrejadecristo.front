@@ -1,0 +1,17 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-8" style="padding-top: 15px;">
+        <h5>Lista de Pequenos Grupos</h5>
+      </div>
+      <div class="col-sm-4" style="text-align: right">
+        <a nbButton status="success" routerLink="../../notificacoes/lista">Notificações</a>
+        <a nbButton status="info" routerLink="../../lideres/lista">Líderes</a>
+        <a nbButton status="primary" routerLink="../cadastro" style="margin-left: 10px;">Novo PG</a>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <app-grid-view [colunas]="colunas" [acoes]="acoes" [dadosTabela]="dadosTabela"></app-grid-view>
+  </nb-card-body>
+</nb-card>

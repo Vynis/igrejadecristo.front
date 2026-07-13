@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-md-12">
+    <form *ngIf="notificacao" [formGroup]="formulario">
+      <nb-card>
+        <nb-card-header>
+          <h5>{{ tituloPagina }}</h5>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-5">
+              <label class="label">Título</label>
+              <input nbInput fullWidth formControlName="titulo">
+            </div>
+            <div class="col-sm-3">
+              <label class="label">Tipo</label>
+              <nb-select fullWidth formControlName="tipo">
+                <nb-option value="Aviso">Aviso</nb-option>
+                <nb-option value="Reuniao">Reunião</nb-option>
+                <nb-option value="Manual">Manual</nb-option>
+                <nb-option value="Evento">Evento</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-2">
+              <label class="label">Início</label>
+              <input nbInput fullWidth type="date" formControlName="dataInicio">
+            </div>
+            <div class="col-sm-2">
+              <label class="label">Fim</label>
+              <input nbInput fullWidth type="date" formControlName="dataFim">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-12">
+              <label class="label">Mensagem</label>
+              <textarea nbInput fullWidth rows="5" formControlName="mensagem"></textarea>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-6">
+              <label class="label">Link</label>
+              <input nbInput fullWidth formControlName="link" placeholder="https://... ou /tablinks/relatorios">
+            </div>
+            <div class="col-sm-2">
+              <label class="label">Status</label>
+              <nb-select fullWidth formControlName="status">
+                <nb-option value="A">Ativo</nb-option>
+                <nb-option value="I">Inativo</nb-option>
+              </nb-select>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-4">
+              <label class="label">Congregação</label>
+              <nb-select fullWidth formControlName="congregacaoId">
+                <nb-option [value]="null">Todos</nb-option>
+                <nb-option *ngFor="let congregacao of congregacoes" [value]="congregacao.id">{{ congregacao.nome }}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-4">
+              <label class="label">Pequeno Grupo</label>
+              <nb-select fullWidth formControlName="pequenoGrupoId">
+                <nb-option [value]="null">Todos</nb-option>
+                <nb-option *ngFor="let pg of pequenosGrupos" [value]="pg.id">{{ pg.nome }}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-4">
+              <label class="label">Líder</label>
+              <nb-select fullWidth formControlName="liderPequenoGrupoId">
+                <nb-option [value]="null">Todos</nb-option>
+                <nb-option *ngFor="let lider of lideres" [value]="lider.id">{{ nomeLider(lider) }}</nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <button type="button" nbButton status="success" (click)="salvar()">Enviar</button>
+          <a ghost nbButton status="danger" routerLink="/pages/pequenos-grupos/notificacoes/lista" style="margin-left: 10px;">Voltar</a>
+        </nb-card-footer>
+      </nb-card>
+    </form>
+  </div>
+</div>

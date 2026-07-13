@@ -1,0 +1,15 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-8" style="padding-top: 15px;">
+        <h5>Notificações dos Líderes de PG</h5>
+      </div>
+      <div class="col-sm-4" style="text-align: right">
+        <a nbButton status="primary" routerLink="../cadastro">Nova Notificação</a>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <app-grid-view [colunas]="colunas" [acoes]="acoes" [dadosTabela]="dadosTabela"></app-grid-view>
+  </nb-card-body>
+</nb-card>

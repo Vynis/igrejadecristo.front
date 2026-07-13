@@ -34,8 +34,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Pequenos Grupos',
     icon: 'people-outline',
-    link: '/pages/pequenos-grupos',
-    home: true,
+    children: [
+      {
+        title: 'PGs',
+        link: '/pages/pequenos-grupos/pg/lista',
+      },
+      {
+        title: 'Líderes',
+        link: '/pages/pequenos-grupos/lideres/lista',
+      },
+      {
+        title: 'Notificações',
+        link: '/pages/pequenos-grupos/notificacoes/lista',
+      }
+    ]
   },
   // {
   //   title: 'Relatorios',

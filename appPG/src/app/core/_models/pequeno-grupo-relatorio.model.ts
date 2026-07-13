@@ -12,4 +12,13 @@ export class PequenoGrupoRelatorio {
   status: string;
   dataCadastro: Date;
   dataEnvio: Date;
+  presencas: PequenoGrupoRelatorioPresenca[];
+}
+
+export class PequenoGrupoRelatorioPresenca {
+  id: number;
+  pequenoGrupoRelatorioId: number;
+  pequenoGrupoMembroId: number;
+  presente: boolean;
+  observacao: string;
 }
