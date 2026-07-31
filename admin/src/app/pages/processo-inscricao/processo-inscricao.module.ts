@@ -12,6 +12,7 @@ import { ProcessoInscricaoComponent } from './processo-inscricao.component';
 import { ProcessoInscricaoListaComponent } from './processo-inscricao-lista/processo-inscricao-lista.component';
 import { ProcessoInscricaoCadastroComponent } from './processo-inscricao-cadastro/processo-inscricao-cadastro.component';
 import { ProcessoInscricaoUsuariosComponent } from './processo-inscricao-usuarios/processo-inscricao-usuarios.component';
+import { PermissaoGuard } from '../../@core/utils/permissao.guard';
 
 const routes: Routes = [
   {
@@ -29,18 +30,26 @@ const routes: Routes = [
       },
       {
         path: 'cadastro',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'processoinscricao.criar' },
         component: ProcessoInscricaoCadastroComponent
       },
       {
         path: 'cadastro/add',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'processoinscricao.criar' },
         component: ProcessoInscricaoCadastroComponent
       },
       {
         path: 'cadastro/edit/:id',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'processoinscricao.editar' },
         component: ProcessoInscricaoCadastroComponent
       },
       {
         path: 'usuarios-inscritos/:idProcessoInscricao',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'processoinscricao.alunos_inscritos' },
         component: ProcessoInscricaoUsuariosComponent
       }
     ]

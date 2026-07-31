@@ -35,6 +35,10 @@ export class ProcessoInscricaoService {
     return this.http.get<ModeloBase>(`${this.caminhoApi}/processo-inscricao/buscar-usuarios-inscritos/${idProcessoInscricao}`)
   }
 
+  alterarStatusEstudo(idInscricao: number, statusEstudo: string) {
+    return this.http.put<ModeloBase>(`${this.caminhoApi}/inscricao-usuario/alterar-status-estudo/${idInscricao}?statusEstudo=${statusEstudo}`, null)
+  }
+
   adicionar(processoInscricao: ProcessoInscricaoModel) {
     return this.http.post<ModeloBase>(`${this.caminhoApi}/processo-inscricao/adcionar`, processoInscricao)
   }
