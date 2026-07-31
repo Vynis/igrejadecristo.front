@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RelatoriosComponent } from './relatorios.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbCardModule, NbInputModule, NbButtonModule, NbSelectModule, NbTabsetModule, NbAlertModule } from '@nebular/theme';
 import { ComponentsModule } from '../components/components.module';
 import { RelatoriosInscricoesComponent } from './relatorios-inscricoes/relatorios-inscricoes.component';
@@ -11,6 +11,8 @@ import { RelatorioService } from '../../@core/services/relatorio.service';
 import { InterceptService } from '../../@core/utils/intercept.service';
 import { RelatoriosPresencaComponent } from './relatorios-presenca/relatorios-presenca.component';
 import { ProcessoInscricaoService } from '../../@core/services/processo-inscricao.service';
+import { RelatoriosEvolucaoUsuariosComponent } from './relatorios-evolucao-usuarios/relatorios-evolucao-usuarios.component';
+import { PermissaoGuard } from '../../@core/utils/permissao.guard';
 
 const routes: Routes = [
 	{
@@ -24,11 +26,21 @@ const routes: Routes = [
 			},
       {
         path: 'relatorio-inscricoes',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'relatorios.inscricoes' },
         component: RelatoriosInscricoesComponent
       },
       {
         path: 'relatorio-presenca',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'relatorios.presenca' },
         component: RelatoriosPresencaComponent
+      },
+      {
+        path: 'relatorio-evolucao-usuarios',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'relatorios.evolucao_alunos' },
+        component: RelatoriosEvolucaoUsuariosComponent
       }
 		]
 	}
@@ -44,12 +56,13 @@ const routes: Routes = [
     NbButtonModule,
     NbSelectModule,
     NbTabsetModule,
+    FormsModule,
     ReactiveFormsModule,
     NbSelectModule,
     ComponentsModule,
     NbAlertModule
   ],
-  declarations: [RelatoriosComponent, RelatoriosInscricoesComponent, RelatoriosPresencaComponent],
+  declarations: [RelatoriosComponent, RelatoriosInscricoesComponent, RelatoriosPresencaComponent, RelatoriosEvolucaoUsuariosComponent],
   providers: [
     InterceptService,
     {

@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FiltroItemModel } from '../../../@core/models/filtroItem.model';
 import { PaginationfilterModel } from '../../../@core/models/paginationfilter.model';
 import { UsuarioModel } from '../../../@core/models/usuario.model';
+import { PermissaoService } from '../../../@core/services/permissao.service';
 import { UsuarioService } from '../../../@core/services/usuario.service';
 import { DataTableAcoes } from '../../components/_models/DataTableAcoes';
 import { DataTableColunas } from '../../components/_models/DataTableColunas';
@@ -29,15 +30,16 @@ export class UsuariosListaComponent implements OnInit {
   ];
 
   acoes: DataTableAcoes[] = [
-    { icone: 'assignment', evento: this.visualizarProcessosInscricao.bind(this), toolTip: 'Visualizar processos de inscrição', color: 'primary' },
-    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary' },
-    { icone: 'refresh', evento: this.resetarSenha.bind(this), toolTip: 'Resetar senha para 123456', color: 'warn' }
+    { icone: 'assignment', evento: this.visualizarProcessosInscricao.bind(this), toolTip: 'Visualizar processos de inscrição', color: 'primary', visivel: () => this.temPermissao('alunos.visualizar_inscricoes') },
+    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary', visivel: () => this.temPermissao('alunos.editar') },
+    { icone: 'refresh', evento: this.resetarSenha.bind(this), toolTip: 'Resetar senha para 123456', color: 'warn', visivel: () => this.temPermissao('alunos.resetar_senha') }
   ];
 
   dadosTabela: UsuarioModel[] = [];
 
   constructor(
     private usuarioService: UsuarioService,
+    private permissaoService: PermissaoService,
     private router: Router,
     private toast: ToastrService
   ) { }
@@ -78,15 +80,19 @@ export class UsuariosListaComponent implements OnInit {
     this.router.navigate([`pages/usuarios/processos-inscricao/${usuario.id}`]);
   }
 
+  temPermissao(permissao: string): boolean {
+    return this.permissaoService.temPermissao(permissao);
+  }
+
   resetarSenha(usuario: UsuarioModel) {
-    const confirmar = confirm(`Deseja resetar a senha do usuário ${usuario.nome} para 123456?`);
+    const confirmar = confirm(`Deseja resetar a senha do aluno ${usuario.nome} para 123456?`);
 
     if (!confirmar)
       return;
 
     this.usuarioService.resetarSenha(usuario.id).subscribe(result => {
       if (!result || !result.success) {
-        this.toast.error('Erro ao resetar senha do usuário');
+        this.toast.error('Erro ao resetar senha do aluno');
         return;
       }
 

@@ -48,7 +48,7 @@
       <div class="col-sm-10" style="padding-top: 15px;">
         <h5>Lista de Inscrições</h5>
       </div>
-      <div class="col-sm-2" style="text-align: right">
+      <div *ngIf="temPermissao('relatorios.inscricoes')" class="col-sm-2" style="text-align: right">
         <a  nbButton status="success" (click)="downloadExcel()" >Exportar para Excel</a>
       </div>
     </div>

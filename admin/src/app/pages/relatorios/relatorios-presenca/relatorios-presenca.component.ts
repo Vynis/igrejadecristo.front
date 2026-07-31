@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProcessoInscricaoService } from '../../../@core/services/processo-inscricao.service';
+import { PermissaoService } from '../../../@core/services/permissao.service';
 import { RelatorioService } from '../../../@core/services/relatorio.service';
 import { error } from 'console';
 
@@ -18,6 +19,7 @@ export class RelatoriosPresencaComponent implements OnInit {
   constructor(
     private processoInscricaoService: ProcessoInscricaoService, 
     private relatorioService: RelatorioService,
+    private permissaoService: PermissaoService,
     private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -85,6 +87,10 @@ export class RelatoriosPresencaComponent implements OnInit {
     }
    
     );
+  }
+
+  temPermissao(permissao: string): boolean {
+    return this.permissaoService.temPermissao(permissao);
   }
 
 }

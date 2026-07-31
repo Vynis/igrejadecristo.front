@@ -7,6 +7,7 @@ import { PaginationfilterModel } from '../../../@core/models/paginationfilter.mo
 import { FiltroItemModel } from '../../../@core/models/filtroItem.model';
 import { formatDate } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { PermissaoService } from '../../../@core/services/permissao.service';
 
 @Component({
   selector: 'app-relatorios-inscricoes',
@@ -45,6 +46,7 @@ export class RelatoriosInscricoesComponent implements OnInit {
 
   constructor(
     private relatorioService: RelatorioService,
+    private permissaoService: PermissaoService,
     private fb: FormBuilder
   ) { }
 
@@ -117,6 +119,10 @@ export class RelatoriosInscricoesComponent implements OnInit {
       this.createForm(filtro);
       this.obterDadosGrid();
     });
+  }
+
+  temPermissao(permissao: string): boolean {
+    return this.permissaoService.temPermissao(permissao);
   }
 
 }

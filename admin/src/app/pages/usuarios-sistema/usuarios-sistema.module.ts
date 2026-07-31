@@ -6,17 +6,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NbAlertModule, NbButtonModule, NbCardModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 import { InterceptService } from '../../@core/utils/intercept.service';
 import { ComponentsModule } from '../components/components.module';
-import { UsuarioService } from '../../@core/services/usuario.service';
+import { UsuarioSistemaService } from '../../@core/services/usuario-sistema.service';
 import { PermissaoGuard } from '../../@core/utils/permissao.guard';
-import { UsuariosComponent } from './usuarios.component';
-import { UsuariosListaComponent } from './usuarios-lista/usuarios-lista.component';
-import { UsuariosCadastroComponent } from './usuarios-cadastro/usuarios-cadastro.component';
-import { UsuariosProcessosInscricaoComponent } from './usuarios-processos-inscricao/usuarios-processos-inscricao.component';
+import { UsuariosSistemaComponent } from './usuarios-sistema.component';
+import { UsuariosSistemaListaComponent } from './usuarios-sistema-lista/usuarios-sistema-lista.component';
+import { UsuariosSistemaCadastroComponent } from './usuarios-sistema-cadastro/usuarios-sistema-cadastro.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: UsuariosComponent,
+    component: UsuariosSistemaComponent,
     children: [
       {
         path: '',
@@ -25,31 +24,25 @@ const routes: Routes = [
       },
       {
         path: 'lista',
-        component: UsuariosListaComponent
+        component: UsuariosSistemaListaComponent
       },
       {
         path: 'cadastro',
         canActivate: [PermissaoGuard],
-        data: { permissao: 'alunos.criar' },
-        component: UsuariosCadastroComponent
+        data: { permissao: 'usuariosistema.criar' },
+        component: UsuariosSistemaCadastroComponent
       },
       {
         path: 'cadastro/add',
         canActivate: [PermissaoGuard],
-        data: { permissao: 'alunos.criar' },
-        component: UsuariosCadastroComponent
+        data: { permissao: 'usuariosistema.criar' },
+        component: UsuariosSistemaCadastroComponent
       },
       {
         path: 'cadastro/edit/:id',
         canActivate: [PermissaoGuard],
-        data: { permissao: 'alunos.editar' },
-        component: UsuariosCadastroComponent
-      },
-      {
-        path: 'processos-inscricao/:idUsuario',
-        canActivate: [PermissaoGuard],
-        data: { permissao: 'alunos.visualizar_inscricoes' },
-        component: UsuariosProcessosInscricaoComponent
+        data: { permissao: 'usuariosistema.editar' },
+        component: UsuariosSistemaCadastroComponent
       }
     ]
   }
@@ -69,10 +62,9 @@ const routes: Routes = [
     NbAlertModule
   ],
   declarations: [
-    UsuariosComponent,
-    UsuariosListaComponent,
-    UsuariosCadastroComponent,
-    UsuariosProcessosInscricaoComponent
+    UsuariosSistemaComponent,
+    UsuariosSistemaListaComponent,
+    UsuariosSistemaCadastroComponent
   ],
   providers: [
     InterceptService,
@@ -81,7 +73,7 @@ const routes: Routes = [
       useClass: InterceptService,
       multi: true
     },
-    UsuarioService
+    UsuarioSistemaService
   ]
 })
-export class UsuariosModule { }
+export class UsuariosSistemaModule { }

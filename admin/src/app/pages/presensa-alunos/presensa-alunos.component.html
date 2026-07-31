@@ -49,8 +49,8 @@
                     <div class="col-md-4">
                       <br /><br />
 
-                      <button *ngIf="dados.status === 'N'" (click)="realizarCheckIn(dados)"  type="submit" nbButton status="success">Fazer Check-In</button>
-                      <button *ngIf="dados.status === 'P'" (click)="desfazerCheckIn(dados)" type="submit" nbButton status="danger">Desfazer Check-In</button>
+                      <button *ngIf="dados.status === 'N' && temPermissao('presenca.lancar')" (click)="realizarCheckIn(dados)"  type="submit" nbButton status="success">Fazer Check-In</button>
+                      <button *ngIf="dados.status === 'P' && temPermissao('presenca.remover')" (click)="desfazerCheckIn(dados)" type="submit" nbButton status="danger">Desfazer Check-In</button>
                     </div>
                   </div>
                 </nb-card-body>
@@ -79,8 +79,8 @@
                     <div class="col-md-4">
                       <br /><br />
 
-                      <button *ngIf="dados.status === 'N'" (click)="realizarCheckIn(dados)" type="submit" nbButton status="success">Fazer Check-In</button>
-                      <button *ngIf="dados.status === 'P'" (click)="desfazerCheckIn(dados)" type="submit" nbButton status="danger">Desfazer Check-In</button>
+                      <button *ngIf="dados.status === 'N' && temPermissao('presenca.lancar')" (click)="realizarCheckIn(dados)" type="submit" nbButton status="success">Fazer Check-In</button>
+                      <button *ngIf="dados.status === 'P' && temPermissao('presenca.remover')" (click)="desfazerCheckIn(dados)" type="submit" nbButton status="danger">Desfazer Check-In</button>
                     </div>
                   </div>
                 </nb-card-body>
@@ -107,8 +107,8 @@
                     <div class="col-md-4">
                       <br /><br />
 
-                      <button *ngIf="dados.status === 'N'" (click)="realizarCheckIn(dados)" type="submit" nbButton status="success">Fazer Check-In</button>
-                      <button *ngIf="dados.status === 'P'" (click)="desfazerCheckIn(dados)" type="submit" nbButton status="danger">Desfazer Check-In</button>
+                      <button *ngIf="dados.status === 'N' && temPermissao('presenca.lancar')" (click)="realizarCheckIn(dados)" type="submit" nbButton status="success">Fazer Check-In</button>
+                      <button *ngIf="dados.status === 'P' && temPermissao('presenca.remover')" (click)="desfazerCheckIn(dados)" type="submit" nbButton status="danger">Desfazer Check-In</button>
                     </div>
                   </div>
                 </nb-card-body>
