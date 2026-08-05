@@ -27,7 +27,7 @@ export class ProcessoInscricaoModel {
   qtdInscricoesTotal: number;
   qtdInscricoesConfirmadas: number;
   qtdInscricoesCanceladas: number;
-  curso: CursoModel = new CursoModel();
+  curso: CursoModel;
 
   constructor() {
     this.id = 0;
@@ -37,7 +37,7 @@ export class ProcessoInscricaoModel {
     this.valor = 0;
     this.valorPixBoleto = 0;
     this.limiteVagas = 0;
-    this.diaSemanaCurso = 'SEG';
+    this.diaSemanaCurso = 'segunda-feira';
     this.qtdInscricoesTotal = 0;
     this.qtdInscricoesConfirmadas = 0;
     this.qtdInscricoesCanceladas = 0;
