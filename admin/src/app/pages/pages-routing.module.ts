@@ -114,6 +114,10 @@ const routes: Routes = [{
       loadChildren: () => import('./presensa-alunos/presensa-alunos.module').then(m => m.PresensaAlunosModule),
     },
     {
+      path: 'pequenos-grupos',
+      loadChildren: () => import('./pequenos-grupos/pequenos-grupos.module').then(m => m.PequenosGruposModule),
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

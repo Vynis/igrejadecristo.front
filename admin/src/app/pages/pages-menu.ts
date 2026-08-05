@@ -48,6 +48,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
     data: { permissao: 'presenca.visualizar' },
   },
+  {
+    title: 'Pequenos Grupos',
+    icon: 'people-outline',
+    link: '/pages/pequenos-grupos',
+    home: true,
+  },
   // {
   //   title: 'Relatorios',
   //   group: true,

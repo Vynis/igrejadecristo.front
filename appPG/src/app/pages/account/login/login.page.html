@@ -1,0 +1,47 @@
+<ion-content [scrollEvents]="true" padding>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col size-md="12">
+        <form [formGroup]="form">
+          <br>
+          <div class="animated fadeIn ion-text-center">
+            <img src="assets/icon/logo-igreja-light.png" alt="Área do Líder de PG"  >
+            <h2>Área do Líder de PG</h2>
+            <p class="subtitle">Acesso exclusivo para líderes cadastrados</p>
+          </div>
+          <br>
+          <ion-list lines="none" class="animated fadeIn">
+            <ion-item>
+              <ion-input type="text"  placeholder="E-mail ou Cpf" formControlName="email"
+                autocomplete="username" (keyup.enter)="submit()">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input [type]="hide ? 'password' : 'text'" placeholder="Senha" formControlName="password"
+                autocomplete="password" (keyup.enter)="submit()">
+              </ion-input>
+              <ion-icon  class="clickable" [name]="hide ? 'eye' : 'eye-off'" (click)="toggleHide()">
+              </ion-icon>
+            </ion-item>
+          </ion-list>
+          <br>
+          <ion-button  expand="full" size="large" class="animated fadeIn" [disabled]="!form.valid"
+            (click)="submit()">
+            Entrar
+          </ion-button>
+          <ion-button  fill="clear" expand="full" class="animated fadeIn" (click)="resetPassword()">ESQUECI
+            MINHA SENHA
+          </ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="animated fadeIn ion-text-center">
+      <span>Coordenação de Pastoreio - Pequenos Grupos</span>
+    </div>
+  </ion-toolbar>
+</ion-footer>

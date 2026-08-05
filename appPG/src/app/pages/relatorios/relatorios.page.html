@@ -1,0 +1,32 @@
+<ion-header><ion-toolbar color="primary"><ion-title>Relatórios</ion-title></ion-toolbar></ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <ion-card>
+      <ion-card-header><ion-card-title>{{ editando ? 'Editar relatório' : 'Novo relatório semanal' }}</ion-card-title></ion-card-header>
+      <ion-card-content>
+        <ion-item><ion-label position="stacked">Data da reunião</ion-label><ion-input type="date" formControlName="dataReuniao"></ion-input></ion-item>
+        <ion-item><ion-label position="stacked">Semana referência</ion-label><ion-input formControlName="semanaReferencia"></ion-input></ion-item>
+        <ion-item><ion-label position="stacked">Ativos</ion-label><ion-input type="number" formControlName="quantidadeAtivos"></ion-input></ion-item>
+        <ion-item><ion-label position="stacked">Rotativos</ion-label><ion-input type="number" formControlName="quantidadeRotativos"></ion-input></ion-item>
+        <ion-item><ion-label position="stacked">Crianças</ion-label><ion-input type="number" formControlName="quantidadeCriancas"></ion-input></ion-item>
+        <ion-item><ion-label position="stacked">Visitantes</ion-label><ion-input type="number" formControlName="quantidadeVisitantes"></ion-input></ion-item>
+        <ion-item><ion-label position="stacked">Observação</ion-label><ion-textarea formControlName="observacao"></ion-textarea></ion-item>
+        <ion-button expand="block" type="submit">Salvar rascunho</ion-button>
+        <ion-button expand="block" fill="clear" type="button" (click)="novo()" *ngIf="editando">Cancelar edição</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </form>
+
+  <ion-list>
+    <ion-list-header>Histórico</ion-list-header>
+    <ion-item *ngFor="let relatorio of relatorios">
+      <ion-label>
+        <h2>{{ relatorio.dataReuniao | date:'dd/MM/yyyy' }} - {{ relatorio.status }}</h2>
+        <p>Ativos: {{ relatorio.quantidadeAtivos }} | Rotativos: {{ relatorio.quantidadeRotativos }} | Crianças: {{ relatorio.quantidadeCriancas }}</p>
+      </ion-label>
+      <ion-button fill="clear" (click)="editar(relatorio)" *ngIf="relatorio.status !== 'Enviado'">Editar</ion-button>
+      <ion-button fill="clear" color="success" (click)="enviar(relatorio)" *ngIf="relatorio.status !== 'Enviado'">Enviar</ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
