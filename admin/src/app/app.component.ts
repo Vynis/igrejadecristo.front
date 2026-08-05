@@ -8,6 +8,7 @@ import { AnalyticsService } from './@core/utils/analytics.service';
 import { SeoService } from './@core/utils/seo.service';
 import { Router } from '@angular/router';
 import { NbMenuService } from '@nebular/theme';
+import { PermissaoService } from './@core/services/permissao.service';
 
 @Component({
   selector: 'ngx-app',
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
     private analytics: AnalyticsService, 
     private seoService: SeoService,
     private menuService: NbMenuService,
+    private permissaoService: PermissaoService,
     private router: Router) {
       this.menuUser();
   }
@@ -34,6 +36,7 @@ export class AppComponent implements OnInit {
 
         switch (event.item.title ) {
           case 'Sair':
+            this.permissaoService.limpar();
             localStorage.clear();
             this.router.navigateByUrl('/auth/login');
             break;

@@ -55,6 +55,9 @@ import { EarningCardBackComponent } from './earning-card/back-side/earning-card-
 import { EarningPieChartComponent } from './earning-card/back-side/earning-pie-chart.component';
 import { EarningCardFrontComponent } from './earning-card/front-side/earning-card-front.component';
 import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earning-live-update-chart.component';
+import { RelatorioService } from '../../@core/services/relatorio.service';
+import { ProcessoInscricaoService } from '../../@core/services/processo-inscricao.service';
+import { UsuarioService } from '../../@core/services/usuario.service';
 
 @NgModule({
   imports: [
@@ -108,6 +111,9 @@ import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earni
   ],
   providers: [
     CountryOrdersMapService,
+    RelatorioService,
+    ProcessoInscricaoService,
+    UsuarioService,
   ],
 })
 export class ECommerceModule { }

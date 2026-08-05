@@ -6,6 +6,7 @@ import { CursoModel } from '../../../@core/models/curso.model';
 import { FiltroItemModel } from '../../../@core/models/filtroItem.model';
 import { PaginationfilterModel } from '../../../@core/models/paginationfilter.model';
 import { CursosService } from '../../../@core/services/cursos.service';
+import { PermissaoService } from '../../../@core/services/permissao.service';
 import { DataTableAcoes } from '../../components/_models/DataTableAcoes';
 import { DataTableColunas } from '../../components/_models/DataTableColunas';
 import { ConteudosComponent } from '../conteudos-lista/conteudos-lista.component';
@@ -26,15 +27,16 @@ export class CursosListaComponent implements OnInit {
   ];
 
   acoes: DataTableAcoes[] = [
-    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary' },
+    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary', visivel: () => this.temPermissao('cursos.editar') },
     { icone: 'assignment', evento: this.abrirConteudo.bind(this), toolTip: 'Contéudo', color: 'primary' },
-    { icone: 'lock_open', evento: this.editar.bind(this), toolTip: 'Liberação do Modulo', color: 'primary' },
+    { icone: 'lock_open', evento: this.editar.bind(this), toolTip: 'Liberação do Modulo', color: 'primary', visivel: () => this.temPermissao('cursos.editar') },
   ];
 
   dadosTabela: CursoModel[] = [];
 
   constructor(
     private cursoServices: CursosService,
+    private permissaoService: PermissaoService,
     private route: Router,
     ) { }
 
@@ -67,6 +69,10 @@ export class CursosListaComponent implements OnInit {
 
   abrirConteudo(cursos: CursoModel) {
     this.route.navigate([`pages/cursos/conteudos/${cursos.id}`]);
+  }
+
+  temPermissao(permissao: string): boolean {
+    return this.permissaoService.temPermissao(permissao);
   }
 
   //teste

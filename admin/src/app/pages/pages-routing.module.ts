@@ -5,6 +5,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
+import { PermissaoGuard } from '../@core/utils/permissao.guard';
 
 const routes: Routes = [{
   path: '',
@@ -13,6 +14,8 @@ const routes: Routes = [{
     {
       path: 'dashboard',
       component: ECommerceComponent,
+      canActivate: [PermissaoGuard],
+      data: { permissao: 'dashboard.visualizar' },
     },
     {
       path: 'iot-dashboard',
@@ -70,14 +73,44 @@ const routes: Routes = [{
     },
     {
       path: 'cursos',
+      canActivate: [PermissaoGuard],
+      data: { permissao: 'cursos.visualizar' },
       loadChildren: () => import('./cursos/cursos.module').then(m => m.CursosModule),
     },
     {
+      path: 'processo-inscricao',
+      canActivate: [PermissaoGuard],
+      data: { permissao: 'processoinscricao.visualizar' },
+      loadChildren: () => import('./processo-inscricao/processo-inscricao.module').then(m => m.ProcessoInscricaoModule),
+    },
+    {
+      path: 'usuarios',
+      canActivate: [PermissaoGuard],
+      data: { permissao: 'alunos.visualizar' },
+      loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule),
+    },
+    {
+      path: 'usuarios-sistema',
+      canActivate: [PermissaoGuard],
+      data: { permissao: 'usuariosistema.visualizar' },
+      loadChildren: () => import('./usuarios-sistema/usuarios-sistema.module').then(m => m.UsuariosSistemaModule),
+    },
+    {
+      path: 'permissoes',
+      canActivate: [PermissaoGuard],
+      data: { permissao: 'permissoes.visualizar' },
+      loadChildren: () => import('./permissoes/permissoes.module').then(m => m.PermissoesModule),
+    },
+    {
       path: 'relatorios',
+      canActivate: [PermissaoGuard],
+      data: { permissao: 'relatorios.visualizar' },
       loadChildren: () => import('./relatorios/relatorios.module').then(m => m.RelatoriosModule),
     },
     {
       path: 'presenca-alunos',
+      canActivate: [PermissaoGuard],
+      data: { permissao: 'presenca.visualizar' },
       loadChildren: () => import('./presensa-alunos/presensa-alunos.module').then(m => m.PresensaAlunosModule),
     },
     {
