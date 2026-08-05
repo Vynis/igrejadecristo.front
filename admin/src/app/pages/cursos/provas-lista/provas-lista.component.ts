@@ -11,6 +11,7 @@ import { CursosService } from '../../../@core/services/cursos.service';
 import { DataTableAcoes } from '../../components/_models/DataTableAcoes';
 import { ConteudoService } from '../../../@core/services/conteudo.service';
 import { TipProvaEnum } from '../../../@core/enum/tipoProva.enum';
+import { PermissaoService } from '../../../@core/services/permissao.service';
 
 @Component({
   selector: 'ngx-provas-lista',
@@ -28,7 +29,7 @@ export class ProvasListaComponent implements OnInit {
   ];
 
   acoes: DataTableAcoes[] = [
-    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary' },
+    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary', visivel: () => this.temPermissao('cursos.editar') },
   ];
 
   dadosTabela: CursoModel[] = [];
@@ -38,6 +39,7 @@ export class ProvasListaComponent implements OnInit {
   constructor(
     private conteudoService: ConteudoService,
     private provaService: ProvaService,
+    private permissaoService: PermissaoService,
     private activatedRoute: ActivatedRoute,
     private route: Router,
     ) { }
@@ -83,6 +85,10 @@ export class ProvasListaComponent implements OnInit {
 
   descricaoTipoProva(tipo) {
     return this.tipoProva.filter(x =>  x.id === tipo)[0].descricao;
+  }
+
+  temPermissao(permissao: string): boolean {
+    return this.permissaoService.temPermissao(permissao);
   }
 
 }

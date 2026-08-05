@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FiltroItemModel } from '../../../@core/models/filtroItem.model';
 import { PaginationfilterModel } from '../../../@core/models/paginationfilter.model';
 import { ProcessoInscricaoModel } from '../../../@core/models/processo-inscricao.model';
+import { PermissaoService } from '../../../@core/services/permissao.service';
 import { ProcessoInscricaoService } from '../../../@core/services/processo-inscricao.service';
 import { DataTableAcoes } from '../../components/_models/DataTableAcoes';
 import { DataTableColunas } from '../../components/_models/DataTableColunas';
@@ -38,14 +39,16 @@ export class ProcessoInscricaoListaComponent implements OnInit {
   ];
 
   acoes: DataTableAcoes[] = [
-    { icone: 'people', evento: this.visualizarUsuariosInscritos.bind(this), toolTip: 'Visualizar usuários inscritos', color: 'primary' },
-    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary' }
+    { icone: 'people', evento: this.visualizarUsuariosInscritos.bind(this), toolTip: 'Visualizar alunos inscritos', color: 'primary', visivel: () => this.temPermissao('processoinscricao.alunos_inscritos') },
+    { icone: 'lock_open', evento: this.liberarCursos.bind(this), toolTip: 'Liberar cursos para inscrição', color: 'primary', visivel: () => this.temPermissao('processoinscricao.liberar_cursos') },
+    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary', visivel: () => this.temPermissao('processoinscricao.editar') }
   ];
 
   dadosTabela: ProcessoInscricaoModel[] = [];
 
   constructor(
     private processoInscricaoService: ProcessoInscricaoService,
+    private permissaoService: PermissaoService,
     private router: Router
   ) { }
 
@@ -101,6 +104,14 @@ export class ProcessoInscricaoListaComponent implements OnInit {
 
   visualizarUsuariosInscritos(processoInscricao: ProcessoInscricaoModel) {
     this.router.navigate([`pages/processo-inscricao/usuarios-inscritos/${processoInscricao.id}`]);
+  }
+
+  liberarCursos(processoInscricao: ProcessoInscricaoModel) {
+    this.router.navigate([`pages/processo-inscricao/liberar-cursos/${processoInscricao.id}`]);
+  }
+
+  temPermissao(permissao: string): boolean {
+    return this.permissaoService.temPermissao(permissao);
   }
 
   private ordenarCicloAnoDesc(lista: any[]): any[] {

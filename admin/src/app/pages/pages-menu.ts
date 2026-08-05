@@ -6,30 +6,47 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
     link: '/pages/dashboard',
     home: true,
+    data: { permissao: 'dashboard.visualizar' },
   },
   {
     title: 'Cursos',
     icon: 'edit-2-outline',
     link: '/pages/cursos',
     home: true,
+    data: { permissao: 'cursos.visualizar' },
   },
   {
     title: 'Processo Inscrição',
     icon: 'calendar-outline',
     link: '/pages/processo-inscricao',
     home: true,
+    data: { permissao: 'processoinscricao.visualizar' },
   },
   {
-    title: 'Usuários',
+    title: 'Alunos',
     icon: 'people-outline',
     link: '/pages/usuarios',
     home: true,
+    data: { permissao: 'alunos.visualizar' },
+  },
+  {
+    title: 'Usuários do Sistema',
+    icon: 'person-done-outline',
+    link: '/pages/usuarios-sistema',
+    data: { permissao: 'usuariosistema.visualizar' },
+  },
+  {
+    title: 'Permissões',
+    icon: 'lock-outline',
+    link: '/pages/permissoes',
+    data: { permissao: 'permissoes.visualizar' },
   },
   {
     title: 'Presença alunos',
     icon: 'edit-2-outline',
     link: '/pages/presenca-alunos',
     home: true,
+    data: { permissao: 'presenca.visualizar' },
   },
   {
     title: 'Pequenos Grupos',
@@ -48,12 +65,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Inscrições',
         link: '/pages/relatorios',
+        data: { permissao: 'relatorios.inscricoes' },
       },
       {
         title: 'Presença Alunos',
-        link: '/pages/relatorios/relatorio-presenca'
+        link: '/pages/relatorios/relatorio-presenca',
+        data: { permissao: 'relatorios.presenca' },
+      },
+      {
+        title: 'Evolução dos Alunos',
+        link: '/pages/relatorios/relatorio-evolucao-usuarios',
+        data: { permissao: 'relatorios.evolucao_alunos' },
       }
-    ]
+    ],
+    data: { permissao: 'relatorios.visualizar' },
   }
   // {
   //   title: 'IoT Dashboard',

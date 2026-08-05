@@ -36,7 +36,7 @@ export class ECommerceComponent implements OnInit {
     { titulo: 'Inscrições', valor: 0, status: 'primary' },
     { titulo: 'Confirmadas', valor: 0, status: 'success' },
     { titulo: 'Canceladas', valor: 0, status: 'danger' },
-    { titulo: 'Usuários', valor: 0, status: 'info' },
+    { titulo: 'Alunos', valor: 0, status: 'info' },
   ];
 
   graficoCursos: any = {};
@@ -139,7 +139,7 @@ export class ECommerceComponent implements OnInit {
       { titulo: 'Inscrições', valor: totalInscricoes, status: 'primary' },
       { titulo: 'Confirmadas', valor: confirmadas, status: 'success' },
       { titulo: 'Canceladas', valor: canceladas, status: 'danger' },
-      { titulo: 'Usuários', valor: totalUsuarios, status: 'info' },
+      { titulo: 'Alunos', valor: totalUsuarios, status: 'info' },
     ];
   }
 

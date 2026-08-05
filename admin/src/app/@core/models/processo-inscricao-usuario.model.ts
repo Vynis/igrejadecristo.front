@@ -6,6 +6,7 @@ export class ProcessoInscricaoUsuarioModel {
   cpf: string;
   telefoneCelular: string;
   status: string;
+  statusEstudo: string;
   dataInscricao: string;
   dataConfirmacao: string;
 }

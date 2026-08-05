@@ -23,7 +23,7 @@
       <div class="col-sm-10" style="padding-top: 15px;">
         <h5>Lista de Processos de Inscrição</h5>
       </div>
-      <div class="col-sm-2" style="text-align: right">
+      <div *ngIf="temPermissao('processoinscricao.criar')" class="col-sm-2" style="text-align: right">
         <a nbButton status="primary" routerLink="../cadastro">Novo</a>
       </div>
     </div>

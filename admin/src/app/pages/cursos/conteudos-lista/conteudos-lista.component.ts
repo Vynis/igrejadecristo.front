@@ -8,6 +8,7 @@ import { DataTableColunas } from '../../components/_models/DataTableColunas';
 import { DataTableAcoes } from '../../components/_models/DataTableAcoes';
 import { ConteudosCadastroComponent } from '../conteudos-cadastro/conteudos-cadastro.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PermissaoService } from '../../../@core/services/permissao.service';
 
 @Component({
   selector: 'app-conteudos-lista',
@@ -26,7 +27,7 @@ export class ConteudosComponent implements OnInit {
   ];
 
   acoes: DataTableAcoes[] = [
-    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary' },
+    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary', visivel: () => this.temPermissao('cursos.editar') },
     { icone: 'note_add', evento: this.chamarTelaProva.bind(this), toolTip: 'Prova', color: 'primary', visivel: (row: ConteudoModel) => row.tipo == 'PR' || row.tipo == 'PA' ? true : false },
   ];
 
@@ -36,6 +37,7 @@ export class ConteudosComponent implements OnInit {
   constructor(
     private cursosService: CursosService,
     private conteudoService: ConteudoService,
+    private permissaoService: PermissaoService,
     private activatedRoute: ActivatedRoute,
     private route: Router
   ) {
@@ -86,6 +88,10 @@ export class ConteudosComponent implements OnInit {
 
   chamarTelaProva(conteudo: ConteudoModel) {
     this.route.navigate([`pages/cursos/provas/${conteudo.id}`])
+  }
+
+  temPermissao(permissao: string): boolean {
+    return this.permissaoService.temPermissao(permissao);
   }
 
 }
