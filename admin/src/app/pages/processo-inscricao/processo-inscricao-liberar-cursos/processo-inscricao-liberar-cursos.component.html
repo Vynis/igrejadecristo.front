@@ -1,0 +1,38 @@
+<nb-card>
+  <nb-card-header>
+    <h5>Liberar cursos para inscrição</h5>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-alert *ngIf="carregando" status="info">Carregando cursos...</nb-alert>
+
+    <div *ngIf="!carregando && processoInscricao">
+      <p>
+        <strong>Processo:</strong> {{processoInscricao.id}} - {{processoInscricao.curso?.titulo}}
+        <span *ngIf="processoInscricao.ciclo || processoInscricao.ano">({{processoInscricao.ciclo}}/{{processoInscricao.ano}})</span>
+      </p>
+
+      <nb-alert status="basic">
+        Selecione os cursos que o aluno precisa ter sido aprovado antes de se inscrever neste processo.
+      </nb-alert>
+
+      <nb-alert *ngIf="cursos.length === 0" status="warning">
+        Nenhum curso disponível para configurar como pré-requisito.
+      </nb-alert>
+
+      <div class="cursos-grid" *ngIf="cursos.length > 0">
+        <label class="curso-item" *ngFor="let curso of cursos">
+          <nb-checkbox
+            [checked]="cursoMarcado(curso.id)"
+            (checkedChange)="alterarCurso(curso.id, $event)">
+            {{curso.titulo}}
+          </nb-checkbox>
+          <small>{{curso.descricao}}</small>
+        </label>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton status="success" (click)="salvar()" [disabled]="salvando || carregando">Salvar</button>
+    <a ghost nbButton status="danger" routerLink="/pages/processo-inscricao/lista">Voltar</a>
+  </nb-card-footer>
+</nb-card>
