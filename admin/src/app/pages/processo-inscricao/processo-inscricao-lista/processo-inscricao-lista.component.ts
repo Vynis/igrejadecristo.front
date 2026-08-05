@@ -40,6 +40,7 @@ export class ProcessoInscricaoListaComponent implements OnInit {
 
   acoes: DataTableAcoes[] = [
     { icone: 'people', evento: this.visualizarUsuariosInscritos.bind(this), toolTip: 'Visualizar alunos inscritos', color: 'primary', visivel: () => this.temPermissao('processoinscricao.alunos_inscritos') },
+    { icone: 'lock_open', evento: this.liberarCursos.bind(this), toolTip: 'Liberar cursos para inscrição', color: 'primary', visivel: () => this.temPermissao('processoinscricao.liberar_cursos') },
     { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary', visivel: () => this.temPermissao('processoinscricao.editar') }
   ];
 
@@ -103,6 +104,10 @@ export class ProcessoInscricaoListaComponent implements OnInit {
 
   visualizarUsuariosInscritos(processoInscricao: ProcessoInscricaoModel) {
     this.router.navigate([`pages/processo-inscricao/usuarios-inscritos/${processoInscricao.id}`]);
+  }
+
+  liberarCursos(processoInscricao: ProcessoInscricaoModel) {
+    this.router.navigate([`pages/processo-inscricao/liberar-cursos/${processoInscricao.id}`]);
   }
 
   temPermissao(permissao: string): boolean {

@@ -1,0 +1,21 @@
+.cursos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.curso-item {
+  border: 1px solid #edf1f7;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.curso-item small {
+  display: block;
+  margin-top: 6px;
+  color: #8f9bb3;
+}
+
+nb-card-footer a {
+  margin-left: 10px;
+}
