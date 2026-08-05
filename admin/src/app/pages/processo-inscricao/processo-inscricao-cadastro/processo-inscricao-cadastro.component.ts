@@ -63,7 +63,7 @@ export class ProcessoInscricaoCadastroComponent implements OnInit {
       dataFinalVisualizacaoCurso: [this.toInputDateTime(model.dataFinalVisualizacaoCurso)],
       limiteVagas: [model.limiteVagas],
       descricaoPagto: [model.descricaoPagto],
-      diaSemanaCurso: [model.diaSemanaCurso || 'SEG'],
+      diaSemanaCurso: [model.diaSemanaCurso || 'segunda-feira'],
       horarioListaPresencaInicial: [this.toInputTime(model.horarioListaPresencaInicial), [Validators.required]],
       horarioListaPresencaFinal: [this.toInputTime(model.horarioListaPresencaFinal), [Validators.required]],
       dataInicioPresencial: [this.toInputDateTime(model.dataInicioPresencial)],
@@ -118,6 +118,7 @@ export class ProcessoInscricaoCadastroComponent implements OnInit {
     model.dataInicioPresencial = controls.dataInicioPresencial.value || null;
     model.dataFinalPresencial = controls.dataFinalPresencial.value || null;
     model.descricao = controls.descricao.value;
+    delete model.curso;
 
     return model;
   }
