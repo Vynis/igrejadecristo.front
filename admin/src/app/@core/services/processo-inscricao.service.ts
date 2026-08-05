@@ -35,6 +35,18 @@ export class ProcessoInscricaoService {
     return this.http.get<ModeloBase>(`${this.caminhoApi}/processo-inscricao/buscar-usuarios-inscritos/${idProcessoInscricao}`)
   }
 
+  buscarCursosLiberacao(idProcessoInscricao: number) {
+    return this.http.get<ModeloBase>(`${this.caminhoApi}/processo-inscricao/liberar-cursos/${idProcessoInscricao}`)
+  }
+
+  salvarCursosLiberacao(idProcessoInscricao: number, cursosIds: number[]) {
+    return this.http.put<ModeloBase>(`${this.caminhoApi}/processo-inscricao/liberar-cursos/${idProcessoInscricao}`, { cursosIds })
+  }
+
+  alterarStatusEstudo(idInscricao: number, statusEstudo: string) {
+    return this.http.put<ModeloBase>(`${this.caminhoApi}/inscricao-usuario/alterar-status-estudo/${idInscricao}?statusEstudo=${statusEstudo}`, null)
+  }
+
   adicionar(processoInscricao: ProcessoInscricaoModel) {
     return this.http.post<ModeloBase>(`${this.caminhoApi}/processo-inscricao/adcionar`, processoInscricao)
   }

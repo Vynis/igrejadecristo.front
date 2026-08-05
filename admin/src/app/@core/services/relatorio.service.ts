@@ -42,4 +42,12 @@ export class RelatorioService {
     return this.http.post(`${this.caminhoApi}/relatorio/download-relatorio-presenca-alunos/?ciclo=${ciclo}&ano=${ano}&processoInscricao=${processoInscricao}`,  null, { responseType: 'arraybuffer' })
   }
 
+  buscaRelatorioEvolucaoUsuarios(nome: string = '') {
+    return this.http.get<ModeloBase>(`${this.caminhoApi}/relatorio/relatorio-evolucao-usuarios?nome=${encodeURIComponent(nome || '')}`)
+  }
+
+  dowloadRelatorioEvolucaoUsuarios(nome: string = ''){
+    return this.http.get(`${this.caminhoApi}/relatorio/download-relatorio-evolucao-usuarios?nome=${encodeURIComponent(nome || '')}`, { responseType: 'arraybuffer' })
+  }
+
 }

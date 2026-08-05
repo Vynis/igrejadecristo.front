@@ -11,7 +11,7 @@ import { UsuarioService } from '../../../@core/services/usuario.service';
   styleUrls: ['./usuarios-cadastro.component.scss']
 })
 export class UsuariosCadastroComponent implements OnInit {
-  tituloPagina: string = 'Cadastro de Usuários';
+  tituloPagina: string = 'Cadastro de Alunos';
   formulario: FormGroup;
   usuario: UsuarioModel;
   existeErro: boolean = false;
@@ -28,7 +28,7 @@ export class UsuariosCadastroComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const id = params.id;
       if (id && id > 0) {
-        this.tituloPagina = `Editar Usuário - Nº ${id}`;
+        this.tituloPagina = `Editar Aluno - Nº ${id}`;
         this.buscaPorId(id);
       }
       else {

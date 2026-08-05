@@ -7,6 +7,7 @@ import { NbAlertModule, NbButtonModule, NbCardModule, NbInputModule, NbSelectMod
 import { InterceptService } from '../../@core/utils/intercept.service';
 import { ComponentsModule } from '../components/components.module';
 import { UsuarioService } from '../../@core/services/usuario.service';
+import { PermissaoGuard } from '../../@core/utils/permissao.guard';
 import { UsuariosComponent } from './usuarios.component';
 import { UsuariosListaComponent } from './usuarios-lista/usuarios-lista.component';
 import { UsuariosCadastroComponent } from './usuarios-cadastro/usuarios-cadastro.component';
@@ -28,18 +29,26 @@ const routes: Routes = [
       },
       {
         path: 'cadastro',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'alunos.criar' },
         component: UsuariosCadastroComponent
       },
       {
         path: 'cadastro/add',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'alunos.criar' },
         component: UsuariosCadastroComponent
       },
       {
         path: 'cadastro/edit/:id',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'alunos.editar' },
         component: UsuariosCadastroComponent
       },
       {
         path: 'processos-inscricao/:idUsuario',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'alunos.visualizar_inscricoes' },
         component: UsuariosProcessosInscricaoComponent
       }
     ]

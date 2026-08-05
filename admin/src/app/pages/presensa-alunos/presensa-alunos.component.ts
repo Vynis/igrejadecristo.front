@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PresencaUsuarioService } from '../../@core/services/presenca-usuario.service';
 import { PresencaUsuarioModel } from '../../@core/models/presenca-usuario.model';
+import { PermissaoService } from '../../@core/services/permissao.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -25,6 +26,7 @@ export class PresensaAlunosComponent implements OnInit {
 
   constructor(
     private presencaUsuarioService: PresencaUsuarioService,
+    private permissaoService: PermissaoService,
     private fb: FormBuilder
   ) { }
 
@@ -162,6 +164,10 @@ export class PresensaAlunosComponent implements OnInit {
         }
       }
     )
+  }
+
+  temPermissao(permissao: string): boolean {
+    return this.permissaoService.temPermissao(permissao);
   }
 
 }

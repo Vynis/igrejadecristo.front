@@ -18,6 +18,7 @@ import { ModuloService } from '../../@core/services/modulo.service';
 import { ProvasListaComponent } from './provas-lista/provas-lista.component';
 import { ProvasCadastroComponent } from './provas-cadastro/provas-cadastro.component';
 import { ProvaService } from '../../@core/services/prova.service';
+import { PermissaoGuard } from '../../@core/utils/permissao.guard';
 
 const routes: Routes = [
 	{
@@ -35,14 +36,20 @@ const routes: Routes = [
 			},			
 			{
 				path: 'cadastro',
+				canActivate: [PermissaoGuard],
+				data: { permissao: 'cursos.criar' },
 				component: CursosCadastroComponent
 			},
 			{
 				path: 'cadastro/add',
+				canActivate: [PermissaoGuard],
+				data: { permissao: 'cursos.criar' },
 				component: CursosCadastroComponent,
 			},
 			{
 				path: 'cadastro/edit/:id',
+				canActivate: [PermissaoGuard],
+				data: { permissao: 'cursos.editar' },
 				component: CursosCadastroComponent,
 			},
 			{
@@ -51,10 +58,14 @@ const routes: Routes = [
 			},
 			{
 				path: 'conteudos/cadastro/add/:idCurso',
+				canActivate: [PermissaoGuard],
+				data: { permissao: 'cursos.criar' },
 				component: ConteudosCadastroComponent,
 			},
 			{
 				path: 'conteudos/cadastro/edit/:id/:idCurso',
+				canActivate: [PermissaoGuard],
+				data: { permissao: 'cursos.editar' },
 				component: ConteudosCadastroComponent,
 			},
 			{
@@ -63,10 +74,14 @@ const routes: Routes = [
 			},
 			{
 				path: 'provas/cadastro/add/:idConteudo',
+				canActivate: [PermissaoGuard],
+				data: { permissao: 'cursos.criar' },
 				component: ProvasCadastroComponent,
 			},
 			{
 				path: 'provas/cadastro/edit/:id/:idConteudo',
+				canActivate: [PermissaoGuard],
+				data: { permissao: 'cursos.editar' },
 				component: ProvasCadastroComponent,
 			},
 		]
