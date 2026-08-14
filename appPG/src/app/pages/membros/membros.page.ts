@@ -1,21 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { PequenoGrupoMembro } from 'src/app/core/_models/pequeno-grupo-membro.model';
 import { PequenoGrupoService } from 'src/app/core/_services/pequeno-grupo.service';
+import { MembroFormModalComponent } from './membro-form-modal.component';
 
 @Component({ selector: 'app-membros', templateUrl: './membros.page.html', styleUrls: ['./membros.page.scss'] })
 export class MembrosPage implements OnInit {
-  form: FormGroup;
   membros: PequenoGrupoMembro[] = [];
-  editando = false;
 
-  constructor(private fb: FormBuilder, private service: PequenoGrupoService, private toastCtrl: ToastController) {
-    this.form = this.fb.group({
-      id: [0], nome: [''], dataNascimento: [''], telefone: [''], email: [''], tipo: ['Ativo'],
-      cep: [''], ruaAvenida: [''], numero: [''], bairro: [''], cidade: [''], estado: [''], complemento: [''], observacao: [''], status: ['A']
-    });
-  }
+  constructor(private service: PequenoGrupoService, private toastCtrl: ToastController, private modalCtrl: ModalController) { }
 
   ngOnInit() { this.carregar(); }
 
@@ -25,19 +18,7 @@ export class MembrosPage implements OnInit {
     });
   }
 
-  salvar() {
-    const membro = this.form.value as PequenoGrupoMembro;
-    const request = this.editando ? this.service.atualizarMembro(membro) : this.service.cadastrarMembro(membro);
-    request.subscribe(res => {
-      this.show(res.success ? 'Membro salvo com sucesso.' : res.dados);
-      if (res.success) { this.novo(); this.carregar(); }
-    });
-  }
-
-  editar(membro: PequenoGrupoMembro) {
-    this.editando = true;
-    this.form.patchValue(membro);
-  }
+  editar(membro: PequenoGrupoMembro) { this.abrirModal(membro); }
 
   inativar(membro: PequenoGrupoMembro) {
     this.service.inativarMembro(membro.id).subscribe(res => {
@@ -46,9 +27,17 @@ export class MembrosPage implements OnInit {
     });
   }
 
-  novo() {
-    this.editando = false;
-    this.form.reset({ id: 0, tipo: 'Ativo', status: 'A' });
+  async abrirModal(membro?: PequenoGrupoMembro) {
+    const modal = await this.modalCtrl.create({
+      component: MembroFormModalComponent,
+      componentProps: { membro }
+    });
+
+    modal.onDidDismiss().then(({ data }) => {
+      if (data && data.salvo) this.carregar();
+    });
+
+    await modal.present();
   }
 
   async show(message: string) {

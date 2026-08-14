@@ -25,6 +25,8 @@ export class RelatoriosPage implements OnInit {
 
   ngOnInit() { this.carregar(); this.carregarMembros(); }
 
+  ionViewWillEnter() { this.carregarMembros(); }
+
   carregar() {
     this.service.relatorios().subscribe(res => {
       if (res.success) this.relatorios = (res.dados || []).map((x: any) => this.normalizarRelatorio(x));
@@ -36,8 +38,8 @@ export class RelatoriosPage implements OnInit {
       if (res.success) {
         this.membros = (res.dados || []).filter((x: PequenoGrupoMembro) => x.status === 'A');
 
-        if (this.exibindoFormulario && this.modo === 'completo' && !this.presencas.length) {
-          this.montarPresencas(this.presencasRelatorioSelecionado);
+        if (this.exibindoFormulario && this.modo === 'completo') {
+          this.montarPresencas(this.presencas.length ? this.presencas : this.presencasRelatorioSelecionado);
           this.atualizarQuantidades();
         }
       }

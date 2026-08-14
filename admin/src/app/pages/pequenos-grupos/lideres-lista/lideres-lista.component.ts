@@ -5,6 +5,7 @@ import { CongregacaoModel } from '../../../@core/models/congregacao.model';
 import { LiderPequenoGrupoModel } from '../../../@core/models/lider-pequeno-grupo.model';
 import { UsuarioModel } from '../../../@core/models/usuario.model';
 import { PequenoGrupoAdminService } from '../../../@core/services/pequeno-grupo-admin.service';
+import { PermissaoService } from '../../../@core/services/permissao.service';
 import { DataTableAcoes } from '../../components/_models/DataTableAcoes';
 import { DataTableColunas } from '../../components/_models/DataTableColunas';
 
@@ -26,12 +27,13 @@ export class LideresListaComponent implements OnInit {
   ];
 
   acoes: DataTableAcoes[] = [
-    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary' },
-    { icone: 'block', evento: this.inativar.bind(this), toolTip: 'Inativar', color: 'warn' }
+    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary', visivel: () => this.temPermissao('pequenosgrupos.lideres.editar') },
+    { icone: 'block', evento: this.inativar.bind(this), toolTip: 'Inativar', color: 'warn', visivel: () => this.temPermissao('pequenosgrupos.lideres.inativar') }
   ];
 
   constructor(
     private service: PequenoGrupoAdminService,
+    private permissaoService: PermissaoService,
     private router: Router,
     private toast: ToastrService
   ) { }
@@ -78,5 +80,9 @@ export class LideresListaComponent implements OnInit {
   nomeCongregacao(id: number): string {
     const congregacao = this.congregacoes.find(x => x.id === id);
     return congregacao ? congregacao.nome : `Congregação ${id}`;
+  }
+
+  temPermissao(permissao: string): boolean {
+    return this.permissaoService.temPermissao(permissao);
   }
 }

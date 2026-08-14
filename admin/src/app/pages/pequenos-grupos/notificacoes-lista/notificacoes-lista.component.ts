@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NotificacaoLiderPgModel } from '../../../@core/models/notificacao-lider-pg.model';
 import { PequenoGrupoAdminService } from '../../../@core/services/pequeno-grupo-admin.service';
+import { PermissaoService } from '../../../@core/services/permissao.service';
 import { DataTableAcoes } from '../../components/_models/DataTableAcoes';
 import { DataTableColunas } from '../../components/_models/DataTableColunas';
 
@@ -24,12 +25,13 @@ export class NotificacoesListaComponent implements OnInit {
   ];
 
   acoes: DataTableAcoes[] = [
-    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary' },
-    { icone: 'block', evento: this.inativar.bind(this), toolTip: 'Inativar', color: 'warn' }
+    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary', visivel: () => this.temPermissao('pequenosgrupos.notificacoes.editar') },
+    { icone: 'block', evento: this.inativar.bind(this), toolTip: 'Inativar', color: 'warn', visivel: () => this.temPermissao('pequenosgrupos.notificacoes.inativar') }
   ];
 
   constructor(
     private service: PequenoGrupoAdminService,
+    private permissaoService: PermissaoService,
     private router: Router,
     private toast: ToastrService
   ) { }
@@ -69,5 +71,9 @@ export class NotificacoesListaComponent implements OnInit {
     const valorData = new Date(data);
     if (Number.isNaN(valorData.getTime())) return '-';
     return valorData.toLocaleDateString('pt-BR');
+  }
+
+  temPermissao(permissao: string): boolean {
+    return this.permissaoService.temPermissao(permissao);
   }
 }

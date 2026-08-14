@@ -8,30 +8,6 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="form" (ngSubmit)="salvar()">
-    <ion-card>
-      <ion-card-header><ion-card-title>{{ editando ? 'Editar membro' : 'Novo membro' }}</ion-card-title></ion-card-header>
-      <ion-card-content>
-        <ion-item><ion-label position="stacked">Nome</ion-label><ion-input formControlName="nome"></ion-input></ion-item>
-        <ion-item><ion-label position="stacked">Telefone</ion-label><ion-input formControlName="telefone"></ion-input></ion-item>
-        <ion-item><ion-label position="stacked">Data nascimento</ion-label><ion-input type="date" formControlName="dataNascimento"></ion-input></ion-item>
-        <ion-item>
-          <ion-label position="stacked">Tipo</ion-label>
-          <ion-select formControlName="tipo">
-            <ion-select-option value="Ativo">Ativo</ion-select-option>
-            <ion-select-option value="Rotativo">Rotativo</ion-select-option>
-            <ion-select-option value="Crianca">Criança</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item><ion-label position="stacked">Endereço</ion-label><ion-input formControlName="ruaAvenida"></ion-input></ion-item>
-        <ion-item><ion-label position="stacked">Bairro</ion-label><ion-input formControlName="bairro"></ion-input></ion-item>
-        <ion-item><ion-label position="stacked">Observação</ion-label><ion-textarea formControlName="observacao"></ion-textarea></ion-item>
-        <ion-button expand="block" type="submit">Salvar</ion-button>
-        <ion-button expand="block" fill="clear" type="button" (click)="novo()" *ngIf="editando">Cancelar edição</ion-button>
-      </ion-card-content>
-    </ion-card>
-  </form>
-
   <ion-list>
     <ion-list-header>Membros cadastrados</ion-list-header>
     <ion-item *ngFor="let membro of membros">
@@ -43,4 +19,10 @@
       <ion-button fill="clear" color="danger" (click)="inativar(membro)" *ngIf="membro.status === 'A'">Inativar</ion-button>
     </ion-item>
   </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="abrirModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

@@ -5,6 +5,7 @@ import { LiderPequenoGrupoModel } from '../../../@core/models/lider-pequeno-grup
 import { PequenoGrupoModel } from '../../../@core/models/pequeno-grupo.model';
 import { UsuarioModel } from '../../../@core/models/usuario.model';
 import { PequenoGrupoAdminService } from '../../../@core/services/pequeno-grupo-admin.service';
+import { PermissaoService } from '../../../@core/services/permissao.service';
 import { DataTableAcoes } from '../../components/_models/DataTableAcoes';
 import { DataTableColunas } from '../../components/_models/DataTableColunas';
 
@@ -31,11 +32,13 @@ export class PgListaComponent implements OnInit {
   ];
 
   acoes: DataTableAcoes[] = [
-    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary' }
+    { icone: 'people', evento: this.membros.bind(this), toolTip: 'Membros', color: 'info', visivel: () => this.temPermissao('pequenosgrupos.membros.visualizar') },
+    { icone: 'create', evento: this.editar.bind(this), toolTip: 'Editar', color: 'primary', visivel: () => this.temPermissao('pequenosgrupos.pg.editar') }
   ];
 
   constructor(
     private service: PequenoGrupoAdminService,
+    private permissaoService: PermissaoService,
     private router: Router
   ) { }
 
@@ -68,6 +71,10 @@ export class PgListaComponent implements OnInit {
     this.router.navigate([`pages/pequenos-grupos/pg/cadastro/edit/${pg.id}`]);
   }
 
+  membros(pg: PequenoGrupoModel) {
+    this.router.navigate([`pages/pequenos-grupos/membros/lista/${pg.id}`]);
+  }
+
   nomeUsuario(id: number): string {
     const usuario = this.usuarios.find(x => x.id === id);
     return usuario ? usuario.nome : `Usuário ${id}`;
@@ -81,5 +88,9 @@ export class PgListaComponent implements OnInit {
   nomeLider(id: number): string {
     const lider = this.lideres.find(x => x.id === id);
     return lider ? this.nomeUsuario(lider.usuarioId) : `Líder ${id}`;
+  }
+
+  temPermissao(permissao: string): boolean {
+    return this.permissaoService.temPermissao(permissao);
   }
 }

@@ -2,11 +2,11 @@
   <nb-card-header>
     <div class="row">
       <div class="col-sm-8" style="padding-top: 15px;">
-        <h5>Lista de Líderes de PG</h5>
+        <h5>{{ titulo() }}</h5>
       </div>
       <div class="col-sm-4" style="text-align: right">
-        <a nbButton status="info" routerLink="../../pg/lista" *ngIf="temPermissao('pequenosgrupos.pg.visualizar')">PGs</a>
-        <a nbButton status="primary" routerLink="../cadastro" style="margin-left: 10px;" *ngIf="temPermissao('pequenosgrupos.lideres.criar')">Novo Líder</a>
+        <button nbButton status="primary" type="button" (click)="novo()" *ngIf="temPermissao('pequenosgrupos.membros.criar')">Novo membro</button>
+        <a nbButton status="basic" routerLink="/pages/pequenos-grupos/pg/lista" style="margin-left: 10px;">Voltar para PGs</a>
       </div>
     </div>
   </nb-card-header>
