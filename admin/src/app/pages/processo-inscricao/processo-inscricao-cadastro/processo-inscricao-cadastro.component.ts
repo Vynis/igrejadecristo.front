@@ -118,7 +118,7 @@ export class ProcessoInscricaoCadastroComponent implements OnInit {
     model.dataInicioPresencial = controls.dataInicioPresencial.value || null;
     model.dataFinalPresencial = controls.dataFinalPresencial.value || null;
     model.descricao = controls.descricao.value;
-    delete model.curso;
+    model.curso = null;
 
     return model;
   }

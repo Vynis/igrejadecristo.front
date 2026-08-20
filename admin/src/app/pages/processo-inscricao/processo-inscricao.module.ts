@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NbAlertModule, NbButtonModule, NbCardModule, NbInputModule, NbSelectModule } from '@nebular/theme';
+import { NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 import { ProcessoInscricaoService } from '../../@core/services/processo-inscricao.service';
 import { InterceptService } from '../../@core/utils/intercept.service';
 import { ComponentsModule } from '../components/components.module';
@@ -12,6 +12,7 @@ import { ProcessoInscricaoComponent } from './processo-inscricao.component';
 import { ProcessoInscricaoListaComponent } from './processo-inscricao-lista/processo-inscricao-lista.component';
 import { ProcessoInscricaoCadastroComponent } from './processo-inscricao-cadastro/processo-inscricao-cadastro.component';
 import { ProcessoInscricaoUsuariosComponent } from './processo-inscricao-usuarios/processo-inscricao-usuarios.component';
+import { ProcessoInscricaoLiberarCursosComponent } from './processo-inscricao-liberar-cursos/processo-inscricao-liberar-cursos.component';
 import { PermissaoGuard } from '../../@core/utils/permissao.guard';
 
 const routes: Routes = [
@@ -51,6 +52,12 @@ const routes: Routes = [
         canActivate: [PermissaoGuard],
         data: { permissao: 'processoinscricao.alunos_inscritos' },
         component: ProcessoInscricaoUsuariosComponent
+      },
+      {
+        path: 'liberar-cursos/:idProcessoInscricao',
+        canActivate: [PermissaoGuard],
+        data: { permissao: 'processoinscricao.liberar_cursos' },
+        component: ProcessoInscricaoLiberarCursosComponent
       }
     ]
   }
@@ -64,6 +71,7 @@ const routes: Routes = [
     NbCardModule,
     NbInputModule,
     NbButtonModule,
+    NbCheckboxModule,
     NbSelectModule,
     ReactiveFormsModule,
     ComponentsModule,
@@ -73,7 +81,8 @@ const routes: Routes = [
     ProcessoInscricaoComponent,
     ProcessoInscricaoListaComponent,
     ProcessoInscricaoCadastroComponent,
-    ProcessoInscricaoUsuariosComponent
+    ProcessoInscricaoUsuariosComponent,
+    ProcessoInscricaoLiberarCursosComponent
   ],
   providers: [
     InterceptService,

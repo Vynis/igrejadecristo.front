@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Notificações</ion-title>
+    <ion-buttons slot="end">
+      <app-notificacao-bell></app-notificacao-bell>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="atualizar($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngIf="!carregando && !notificacoes.length" class="empty-card">
+    <ion-card-header>
+      <ion-card-title>Tudo em dia</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Você não possui notificações pendentes no momento.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="notificacoes.length">
+    <ion-list-header>Pendentes</ion-list-header>
+    <ion-item button *ngFor="let notificacao of notificacoes" (click)="abrir(notificacao)">
+      <ion-icon slot="start" [name]="notificacao.tipo === 'RelatorioSemanal' ? 'document-text-outline' : 'notifications-outline'" color="danger"></ion-icon>
+      <ion-label>
+        <h2>{{ notificacao.titulo }}</h2>
+        <p>{{ notificacao.mensagem }}</p>
+        <p *ngIf="notificacao.acaoTexto"><strong>{{ notificacao.acaoTexto }}</strong></p>
+      </ion-label>
+      <ion-badge slot="end" color="danger" *ngIf="notificacao.prioridade === 'Alta'">Alta</ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>

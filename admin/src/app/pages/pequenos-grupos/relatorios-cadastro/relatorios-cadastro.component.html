@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-12">
+    <form *ngIf="relatorio" [formGroup]="formulario">
+      <nb-card>
+        <nb-card-header>
+          <h5>Editar Relatório de PG - Nº {{ relatorio.id }}</h5>
+          <small>{{ nomePg(relatorio.pequenoGrupoId) }}</small>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-3"><label class="label">Data reunião</label><input nbInput fullWidth type="date" formControlName="dataReuniao"></div>
+            <div class="col-sm-3"><label class="label">Semana referência</label><input nbInput fullWidth formControlName="semanaReferencia"></div>
+            <div class="col-sm-2"><label class="label">Status</label><nb-select fullWidth formControlName="status"><nb-option value="Rascunho">Rascunho</nb-option><nb-option value="Enviado">Enviado</nb-option></nb-select></div>
+            <div class="col-sm-2"><label class="label">Visitantes</label><input nbInput fullWidth type="number" formControlName="quantidadeVisitantes"></div>
+          </div>
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-2"><label class="label">Ativos</label><input nbInput fullWidth type="number" formControlName="quantidadeAtivos"></div>
+            <div class="col-sm-2"><label class="label">Rotativos</label><input nbInput fullWidth type="number" formControlName="quantidadeRotativos"></div>
+            <div class="col-sm-2"><label class="label">Crianças</label><input nbInput fullWidth type="number" formControlName="quantidadeCriancas"></div>
+            <div class="col-sm-6"><label class="label">Observação</label><textarea nbInput fullWidth formControlName="observacao"></textarea></div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-header><h6>Check-in nominal</h6></nb-card-header>
+        <nb-card-body>
+          <div class="row" *ngIf="!presencas.length"><div class="col-sm-12">Nenhuma presença nominal registrada.</div></div>
+          <div class="row" *ngFor="let presenca of presencas" style="margin-bottom: 8px;">
+            <div class="col-sm-4">
+              <nb-checkbox [(ngModel)]="presenca.presente" [ngModelOptions]="{standalone: true}" (checkedChange)="atualizarQuantidades()">{{ membroNome(presenca.pequenoGrupoMembroId) }}</nb-checkbox>
+            </div>
+            <div class="col-sm-8"><input nbInput fullWidth placeholder="Observação" [(ngModel)]="presenca.observacao" [ngModelOptions]="{standalone: true}"></div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <button type="button" nbButton status="success" (click)="salvar()">Salvar</button>
+          <a ghost nbButton status="danger" routerLink="/pages/pequenos-grupos/relatorios/lista" style="margin-left: 10px;">Voltar</a>
+        </nb-card-footer>
+      </nb-card>
+    </form>
+  </div>
+</div>

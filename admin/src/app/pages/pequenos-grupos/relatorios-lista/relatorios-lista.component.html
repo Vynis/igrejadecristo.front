@@ -1,0 +1,26 @@
+<nb-card>
+  <nb-card-header><h5>Relatórios enviados dos PGs</h5></nb-card-header>
+  <nb-card-body>
+    <div class="row" style="margin-bottom: 15px;">
+      <div class="col-sm-4">
+        <label class="label">PG</label>
+        <nb-select fullWidth placeholder="Todos" [(selected)]="filtroPequenoGrupoId" (selectedChange)="aplicarFiltros()">
+          <nb-option [value]="null">Todos</nb-option>
+          <nb-option *ngFor="let pg of pequenosGrupos" [value]="pg.id">{{ pg.nome }}</nb-option>
+        </nb-select>
+      </div>
+      <div class="col-sm-3">
+        <label class="label">Mês/Ano de envio</label>
+        <nb-select fullWidth placeholder="Todos" [(selected)]="filtroMesAnoEnvio" (selectedChange)="aplicarFiltros()">
+          <nb-option [value]="null">Todos</nb-option>
+          <nb-option *ngFor="let mes of mesesEnvio" [value]="mes">{{ nomeMesAno(mes) }}</nb-option>
+        </nb-select>
+      </div>
+      <div class="col-sm-2" style="padding-top: 25px;">
+        <button nbButton status="basic" type="button" (click)="limparFiltros()">Limpar filtros</button>
+      </div>
+    </div>
+
+    <app-grid-view [colunas]="colunas" [acoes]="acoes" [dadosTabela]="dadosTabela"></app-grid-view>
+  </nb-card-body>
+</nb-card>

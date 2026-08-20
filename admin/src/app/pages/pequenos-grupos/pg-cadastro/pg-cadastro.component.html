@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-md-12">
+    <form *ngIf="pg" [formGroup]="formulario">
+      <nb-card>
+        <nb-card-header>
+          <h5>{{ tituloPagina }}</h5>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-4">
+              <label class="label">Nome do PG</label>
+              <input nbInput fullWidth formControlName="nome">
+            </div>
+            <div class="col-sm-3">
+              <label class="label">Congregação</label>
+              <nb-select fullWidth formControlName="congregacaoId">
+                <nb-option *ngFor="let congregacao of congregacoes" [value]="congregacao.id">{{ congregacao.nome }}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-3">
+              <label class="label">Líder</label>
+              <div class="input-group">
+                <input nbInput fullWidth readonly [value]="nomeLider(liderSelecionado)" placeholder="Selecione o líder">
+                <div class="input-group-append">
+                  <button nbButton status="primary" type="button" (click)="abrirBuscaLider('lider')">Buscar</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <label class="label">Status</label>
+              <nb-select fullWidth formControlName="status">
+                <nb-option value="A">Ativo</nb-option>
+                <nb-option value="I">Inativo</nb-option>
+              </nb-select>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-3">
+              <label class="label">Co-líder</label>
+              <div class="input-group">
+                <input nbInput fullWidth readonly [value]="nomeLider(coLiderSelecionado)" placeholder="Não informado">
+                <div class="input-group-append">
+                  <button nbButton status="primary" type="button" (click)="abrirBuscaLider('coLider')">Buscar</button>
+                  <button nbButton status="basic" type="button" (click)="limparCoLider()">Limpar</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label class="label">Dia da semana</label>
+              <nb-select fullWidth formControlName="diaSemana">
+                <nb-option value="Segunda-feira">Segunda-feira</nb-option>
+                <nb-option value="Terça-feira">Terça-feira</nb-option>
+                <nb-option value="Quarta-feira">Quarta-feira</nb-option>
+                <nb-option value="Quinta-feira">Quinta-feira</nb-option>
+                <nb-option value="Sexta-feira">Sexta-feira</nb-option>
+                <nb-option value="Sábado">Sábado</nb-option>
+                <nb-option value="Domingo">Domingo</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-2">
+              <label class="label">Horário</label>
+              <input nbInput fullWidth type="time" formControlName="horarioReuniao">
+            </div>
+            <div class="col-sm-2">
+              <label class="label">CEP</label>
+              <input nbInput fullWidth formControlName="cep">
+            </div>
+            <div class="col-sm-2">
+              <label class="label">UF</label>
+              <input nbInput fullWidth maxlength="2" formControlName="estado">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-4">
+              <label class="label">Endereço</label>
+              <input nbInput fullWidth formControlName="endereco">
+            </div>
+            <div class="col-sm-2">
+              <label class="label">Número</label>
+              <input nbInput fullWidth formControlName="numero">
+            </div>
+            <div class="col-sm-3">
+              <label class="label">Complemento</label>
+              <input nbInput fullWidth formControlName="complemento">
+            </div>
+            <div class="col-sm-3">
+              <label class="label">Bairro</label>
+              <input nbInput fullWidth formControlName="bairro">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-4">
+              <label class="label">Cidade</label>
+              <input nbInput fullWidth formControlName="cidade">
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <button type="button" nbButton status="success" (click)="salvar()">Enviar</button>
+          <a ghost nbButton status="danger" routerLink="/pages/pequenos-grupos/pg/lista" style="margin-left: 10px;">Voltar</a>
+        </nb-card-footer>
+      </nb-card>
+    </form>
+  </div>
+</div>

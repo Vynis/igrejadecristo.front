@@ -1,0 +1,41 @@
+<nb-card class="usuario-busca-dialog">
+  <nb-card-header>
+    Buscar usuário
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-10">
+        <input nbInput fullWidth [(ngModel)]="filtro" placeholder="Nome, email ou CPF" (keyup.enter)="filtrar()">
+      </div>
+      <div class="col-sm-2">
+        <button nbButton status="primary" fullWidth type="button" (click)="filtrar()">Filtrar</button>
+      </div>
+    </div>
+
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>CPF</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuariosFiltrados">
+          <td>{{ usuario.nome }}</td>
+          <td>{{ usuario.email || '-' }}</td>
+          <td>{{ usuario.cpf || '-' }}</td>
+          <td>{{ usuario.status === 'A' ? 'Ativo' : 'Inativo' }}</td>
+          <td class="text-right">
+            <button nbButton size="tiny" status="success" type="button" (click)="selecionar(usuario)">Selecionar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton status="basic" type="button" (click)="fechar()">Fechar</button>
+  </nb-card-footer>
+</nb-card>
