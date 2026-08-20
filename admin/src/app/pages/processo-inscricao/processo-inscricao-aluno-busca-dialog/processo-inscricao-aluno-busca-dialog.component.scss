@@ -1,0 +1,18 @@
+.aluno-busca-dialog {
+  max-width: 1100px;
+  min-width: 900px;
+}
+
+.aluno-busca-dialog__acao {
+  align-items: flex-end;
+  display: flex;
+}
+
+.aluno-busca-dialog__tabela,
+.aluno-busca-dialog__sem-resultado {
+  margin-top: 1rem;
+}
+
+.text-right {
+  text-align: right;
+}

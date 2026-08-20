@@ -1,0 +1,19 @@
+.inscricao-manual-form {
+  margin-bottom: 20px;
+}
+
+.inscricao-manual-form__acao {
+  align-items: flex-end;
+  display: flex;
+  gap: 8px;
+}
+
+.aluno-selecionado {
+  align-items: center;
+  background-color: #f7f9fc;
+  border: 1px solid #e4e9f2;
+  border-radius: 0.25rem;
+  display: flex;
+  min-height: 40px;
+  padding: 0.4375rem 1rem;
+}
