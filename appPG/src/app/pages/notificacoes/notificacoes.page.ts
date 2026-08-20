@@ -32,6 +32,15 @@ export class NotificacoesPage implements OnInit {
     });
   }
 
+  atualizar(event: any) {
+    this.notificacaoService.notificacoes().subscribe(notificacoes => {
+      this.notificacoes = notificacoes;
+      event.target.complete();
+    }, () => {
+      event.target.complete();
+    });
+  }
+
   abrir(notificacao: NotificacaoLider) {
     if (notificacao.id > 0 && !notificacao.lida) {
       this.notificacaoService.marcarLida(notificacao.id).subscribe(() => this.carregar());
