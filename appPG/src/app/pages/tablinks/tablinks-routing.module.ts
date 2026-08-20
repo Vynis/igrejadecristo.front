@@ -25,6 +25,11 @@ const routes: Routes = [
         loadChildren: () => import('../relatorios/relatorios.module').then(m => m.RelatoriosPageModule)
       },
       {
+        path: 'notificacoes',
+        canActivate: [LiderPgGuard],
+        loadChildren: () => import('../notificacoes/notificacoes.module').then(m => m.NotificacoesPageModule)
+      },
+      {
         path: 'perfil',
         loadChildren: () => import('../perfil/perfil.module').then(m => m.PerfilPageModule)
       },

@@ -115,6 +115,8 @@ const routes: Routes = [{
     },
     {
       path: 'pequenos-grupos',
+      canActivate: [PermissaoGuard],
+      data: { permissao: 'pequenosgrupos.visualizar' },
       loadChildren: () => import('./pequenos-grupos/pequenos-grupos.module').then(m => m.PequenosGruposModule),
     },
     {

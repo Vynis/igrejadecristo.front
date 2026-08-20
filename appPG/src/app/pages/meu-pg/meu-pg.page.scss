@@ -1,3 +1,84 @@
 ion-card-title {
   font-weight: 700;
 }
+
+.alert-card {
+  border-left: 4px solid var(--ion-color-warning);
+}
+
+.alert-card p {
+  margin-bottom: 0;
+}
+
+.metrics-grid {
+  padding: 0;
+}
+
+.metric-card {
+  height: 100%;
+  margin: 0;
+}
+
+.metric-card ion-card-content {
+  display: flex;
+  min-height: 104px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.metric-card span {
+  color: var(--ion-color-medium);
+  font-size: 13px;
+}
+
+.metric-card strong {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 92px 1fr 32px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.bar-label {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.bar-label span {
+  overflow: hidden;
+  color: var(--ion-color-medium);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bar-track {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(var(--ion-color-primary-rgb), 0.16);
+}
+
+.bar-fill {
+  height: 100%;
+  min-width: 6px;
+  border-radius: inherit;
+  background: var(--ion-color-primary);
+}
+
+.bar-value {
+  color: var(--ion-color-medium);
+  font-weight: 700;
+  text-align: right;
+}
+
+.empty-state {
+  color: var(--ion-color-medium);
+  padding: 10px 0;
+}

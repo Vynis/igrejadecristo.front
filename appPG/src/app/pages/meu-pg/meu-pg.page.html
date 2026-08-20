@@ -1,10 +1,107 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Meu PG</ion-title>
+    <ion-buttons slot="end">
+      <app-notificacao-bell></app-notificacao-bell>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-card class="alert-card" *ngIf="relatorioSemanaPendente">
+    <ion-card-content>
+      <strong>Relatório da semana pendente</strong>
+      <p>Preencha e envie o relatório semanal para manter o acompanhamento do PG atualizado.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-grid class="metrics-grid">
+    <ion-row>
+      <ion-col size="6" size-md="3">
+        <ion-card class="metric-card">
+          <ion-card-content>
+            <span>Membros ativos</span>
+            <strong>{{ totalMembrosAtivos }}</strong>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" size-md="3">
+        <ion-card class="metric-card">
+          <ion-card-content>
+            <span>Relatórios enviados</span>
+            <strong>{{ totalRelatoriosEnviados }}</strong>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" size-md="3">
+        <ion-card class="metric-card">
+          <ion-card-content>
+            <span>Pendentes</span>
+            <strong>{{ totalRelatoriosPendentes }}</strong>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" size-md="3">
+        <ion-card class="metric-card">
+          <ion-card-content>
+            <span>Média presença</span>
+            <strong>{{ mediaPresenca }}%</strong>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Dashboard do líder</ion-card-subtitle>
+      <ion-card-title>Participação do PG</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="empty-state" *ngIf="!participacaoRelatorios.length">Nenhum relatório encontrado para montar o gráfico.</div>
+
+      <div class="bar-row" *ngFor="let item of participacaoRelatorios">
+        <div class="bar-label">
+          <strong>{{ item.data | date:'dd/MM' }}</strong>
+          <span>{{ item.semanaReferencia || 'Sem referência' }}</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill" [style.width.%]="item.percentual"></div>
+        </div>
+        <div class="bar-value">{{ item.totalPresentes }}</div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="ultimoRelatorio">
+    <ion-card-header>
+      <ion-card-subtitle>Resumo</ion-card-subtitle>
+      <ion-card-title>Último relatório</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Data:</strong> {{ ultimoRelatorio.dataReuniao | date:'dd/MM/yyyy' }}</p>
+      <p><strong>Semana:</strong> {{ ultimoRelatorio.semanaReferencia || 'Não informada' }}</p>
+      <p><strong>Status:</strong> {{ ultimoRelatorio.status || 'Não informado' }}</p>
+      <p><strong>Total presente:</strong> {{ totalPresentes(ultimoRelatorio) }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="frequenciaMembros.length">
+    <ion-card-header>
+      <ion-card-subtitle>Check-in completo</ion-card-subtitle>
+      <ion-card-title>Membros mais frequentes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none" *ngFor="let membro of frequenciaMembros">
+        <ion-label>
+          <h2>{{ membro.nome }}</h2>
+          <p>{{ membro.presencas }}/{{ membro.totalRelatorios }} encontros</p>
+        </ion-label>
+        <ion-badge color="primary">{{ membro.percentual }}%</ion-badge>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card *ngIf="dados?.pequenoGrupo">
     <ion-card-header>
       <ion-card-subtitle>Pequeno Grupo</ion-card-subtitle>

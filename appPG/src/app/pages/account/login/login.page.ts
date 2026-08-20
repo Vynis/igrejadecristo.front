@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { finalize, tap } from 'rxjs/operators';
 import { SecurityUtil } from 'src/app/core/utils/security.util';
 import { AuthService } from 'src/app/core/_services/auth.service';
+import { NotificacaoLiderService } from 'src/app/core/_services/notificacao-lider.service';
 import { PequenoGrupoService } from 'src/app/core/_services/pequeno-grupo.service';
 
 @Component({
@@ -20,9 +21,11 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     private loadCtrl: LoadingController,
     private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
     private navCtrl: NavController,
     private authService: AuthService,
-    private pequenoGrupoService: PequenoGrupoService
+    private pequenoGrupoService: PequenoGrupoService,
+    private notificacaoService: NotificacaoLiderService
   ) { 
 		this.form = this.fb.group({
 			email: ['', Validators.compose([
@@ -82,6 +85,7 @@ export class LoginPage implements OnInit {
 
       if (res.success) {
         this.navCtrl.navigateRoot('/tablinks/meu-pg');
+        this.avisarRelatorioPendente();
         return;
       }
 
@@ -91,6 +95,31 @@ export class LoginPage implements OnInit {
       loading.dismiss();
       SecurityUtil.clear();
       this.showError('Não foi possível validar seu acesso à área do líder de PG.');
+    });
+  }
+
+  avisarRelatorioPendente() {
+    this.notificacaoService.resumo().subscribe(async resumo => {
+      if (!resumo.relatorioSemanalPendente) {
+        return;
+      }
+
+      const alert = await this.alertCtrl.create({
+        header: 'Relatório semanal pendente',
+        message: 'Você ainda não preencheu o relatório da reunião desta semana do PG.',
+        buttons: [
+          {
+            text: 'Lembrar depois',
+            role: 'cancel'
+          },
+          {
+            text: 'Preencher agora',
+            handler: () => this.navCtrl.navigateRoot('/tablinks/relatorios')
+          }
+        ]
+      });
+
+      alert.present();
     });
   }
 

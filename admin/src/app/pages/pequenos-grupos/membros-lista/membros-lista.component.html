@@ -1,0 +1,16 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-8" style="padding-top: 15px;">
+        <h5>{{ titulo() }}</h5>
+      </div>
+      <div class="col-sm-4" style="text-align: right">
+        <button nbButton status="primary" type="button" (click)="novo()" *ngIf="temPermissao('pequenosgrupos.membros.criar')">Novo membro</button>
+        <a nbButton status="basic" routerLink="/pages/pequenos-grupos/pg/lista" style="margin-left: 10px;">Voltar para PGs</a>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <app-grid-view [colunas]="colunas" [acoes]="acoes" [dadosTabela]="dadosTabela"></app-grid-view>
+  </nb-card-body>
+</nb-card>

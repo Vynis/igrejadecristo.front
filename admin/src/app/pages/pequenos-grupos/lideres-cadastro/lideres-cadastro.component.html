@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-12">
+    <form *ngIf="lider" [formGroup]="formulario">
+      <nb-card>
+        <nb-card-header>
+          <h5>{{ tituloPagina }}</h5>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-4">
+              <label class="label">Usuário</label>
+              <div class="usuario-selecionado">
+                <input nbInput fullWidth readonly [value]="usuarioSelecionado?.nome || 'Nenhum usuário selecionado'">
+                <button nbButton status="primary" type="button" (click)="abrirBuscaUsuario()">Buscar</button>
+              </div>
+              <input type="hidden" formControlName="usuarioId">
+            </div>
+            <div class="col-sm-3">
+              <label class="label">Congregação</label>
+              <nb-select fullWidth formControlName="congregacaoId">
+                <nb-option [value]="null">Não informar</nb-option>
+                <nb-option *ngFor="let congregacao of congregacoes" [value]="congregacao.id">{{ congregacao.nome }}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-2">
+              <label class="label">Data início</label>
+              <input nbInput fullWidth type="date" formControlName="dataInicio">
+            </div>
+            <div class="col-sm-2">
+              <label class="label">Status</label>
+              <nb-select fullWidth formControlName="status">
+                <nb-option value="A">Ativo</nb-option>
+                <nb-option value="I">Inativo</nb-option>
+              </nb-select>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-12">
+              <label class="label">Observação</label>
+              <textarea nbInput fullWidth rows="4" formControlName="observacao"></textarea>
+            </div>
+          </div>
+        </nb-card-body>
+        <nb-card-footer>
+          <button type="button" nbButton status="success" (click)="salvar()">Enviar</button>
+          <a ghost nbButton status="danger" routerLink="/pages/pequenos-grupos/lideres/lista" style="margin-left: 10px;">Voltar</a>
+        </nb-card-footer>
+      </nb-card>
+    </form>
+  </div>
+</div>

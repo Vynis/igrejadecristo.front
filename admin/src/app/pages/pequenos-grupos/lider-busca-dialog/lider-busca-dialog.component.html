@@ -1,0 +1,41 @@
+<nb-card class="lider-busca-dialog">
+  <nb-card-header>
+    Buscar líder de PG
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-10">
+        <input nbInput fullWidth [(ngModel)]="filtro" placeholder="Nome, email, CPF ou congregação" (keyup.enter)="filtrar()">
+      </div>
+      <div class="col-sm-2">
+        <button nbButton status="primary" fullWidth type="button" (click)="filtrar()">Filtrar</button>
+      </div>
+    </div>
+
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>CPF</th>
+          <th>Congregação</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of lideresFiltrados">
+          <td>{{ item.nome }}</td>
+          <td>{{ item.email || '-' }}</td>
+          <td>{{ item.cpf || '-' }}</td>
+          <td>{{ item.congregacao || '-' }}</td>
+          <td class="text-right">
+            <button nbButton size="tiny" status="success" type="button" (click)="selecionar(item)">Selecionar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton status="basic" type="button" (click)="fechar()">Fechar</button>
+  </nb-card-footer>
+</nb-card>

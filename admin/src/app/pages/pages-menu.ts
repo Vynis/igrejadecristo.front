@@ -51,8 +51,39 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Pequenos Grupos',
     icon: 'people-outline',
-    link: '/pages/pequenos-grupos',
-    home: true,
+    data: { permissao: 'pequenosgrupos.visualizar' },
+    children: [
+      {
+        title: 'PGs',
+        link: '/pages/pequenos-grupos/pg/lista',
+        data: { permissao: 'pequenosgrupos.pg.visualizar' },
+      },
+      {
+        title: 'Líderes',
+        link: '/pages/pequenos-grupos/lideres/lista',
+        data: { permissao: 'pequenosgrupos.lideres.visualizar' },
+      },
+      {
+        title: 'Relatórios enviados',
+        link: '/pages/pequenos-grupos/relatorios/lista',
+        data: { permissao: 'pequenosgrupos.relatorios.visualizar' },
+      },
+      {
+        title: 'Relatório geral',
+        link: '/pages/pequenos-grupos/relatorio-geral',
+        data: { permissao: 'pequenosgrupos.relatoriogeral.visualizar' },
+      },
+      {
+        title: 'Check-ins realizados',
+        link: '/pages/pequenos-grupos/checkins',
+        data: { permissao: 'pequenosgrupos.checkins.visualizar' },
+      },
+      {
+        title: 'Notificações',
+        link: '/pages/pequenos-grupos/notificacoes/lista',
+        data: { permissao: 'pequenosgrupos.notificacoes.visualizar' },
+      }
+    ]
   },
   // {
   //   title: 'Relatorios',

@@ -1,0 +1,18 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-8" style="padding-top: 15px;">
+        <h5>Lista de Pequenos Grupos</h5>
+      </div>
+      <div class="col-sm-4" style="text-align: right">
+        <a nbButton status="basic" routerLink="../../relatorios/lista" *ngIf="temPermissao('pequenosgrupos.relatorios.visualizar')">Relatórios</a>
+        <a nbButton status="success" routerLink="../../notificacoes/lista" *ngIf="temPermissao('pequenosgrupos.notificacoes.visualizar')">Notificações</a>
+        <a nbButton status="info" routerLink="../../lideres/lista" *ngIf="temPermissao('pequenosgrupos.lideres.visualizar')">Líderes</a>
+        <a nbButton status="primary" routerLink="../cadastro" style="margin-left: 10px;" *ngIf="temPermissao('pequenosgrupos.pg.criar')">Novo PG</a>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <app-grid-view [colunas]="colunas" [acoes]="acoes" [dadosTabela]="dadosTabela"></app-grid-view>
+  </nb-card-body>
+</nb-card>
