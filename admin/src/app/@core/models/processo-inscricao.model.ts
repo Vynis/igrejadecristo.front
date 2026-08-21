@@ -27,6 +27,10 @@ export class ProcessoInscricaoModel {
   qtdInscricoesTotal: number;
   qtdInscricoesConfirmadas: number;
   qtdInscricoesCanceladas: number;
+  valorAtual: number;
+  valorPixBoletoAtual: number;
+  loteAtual: string;
+  lotes: ProcessoInscricaoLoteModel[];
   curso: CursoModel;
 
   constructor() {
@@ -41,5 +45,24 @@ export class ProcessoInscricaoModel {
     this.qtdInscricoesTotal = 0;
     this.qtdInscricoesConfirmadas = 0;
     this.qtdInscricoesCanceladas = 0;
+    this.lotes = [];
+  }
+}
+
+export class ProcessoInscricaoLoteModel {
+  id: number;
+  processoInscricaoId: number;
+  nome: string;
+  dataInicial: string;
+  dataFinal: string;
+  valor: number;
+  valorPixBoleto: number;
+  status: string;
+
+  constructor() {
+    this.id = 0;
+    this.status = 'A';
+    this.valor = 0;
+    this.valorPixBoleto = null;
   }
 }

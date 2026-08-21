@@ -1,0 +1,46 @@
+.lotes-pagamento {
+  margin: 14px 0 18px;
+}
+
+.lotes-titulo {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.lote-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.lote-atual {
+  border-color: var(--ion-color-success);
+  background: rgba(var(--ion-color-success-rgb), 0.08);
+}
+
+.lote-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.lote-periodo {
+  color: var(--ion-color-medium);
+  font-size: 13px;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.lote-valores {
+  display: grid;
+  gap: 4px;
+  font-size: 14px;
+}
+
+ion-button {
+  margin-top: 4px;
+}

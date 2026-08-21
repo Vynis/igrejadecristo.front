@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbInputModule, NbSelectModule } from '@nebular/theme';
+import { NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDialogModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 import { ProcessoInscricaoService } from '../../@core/services/processo-inscricao.service';
+import { UsuarioService } from '../../@core/services/usuario.service';
 import { InterceptService } from '../../@core/utils/intercept.service';
 import { ComponentsModule } from '../components/components.module';
 import { CursosService } from '../../@core/services/cursos.service';
@@ -13,6 +14,7 @@ import { ProcessoInscricaoListaComponent } from './processo-inscricao-lista/proc
 import { ProcessoInscricaoCadastroComponent } from './processo-inscricao-cadastro/processo-inscricao-cadastro.component';
 import { ProcessoInscricaoUsuariosComponent } from './processo-inscricao-usuarios/processo-inscricao-usuarios.component';
 import { ProcessoInscricaoLiberarCursosComponent } from './processo-inscricao-liberar-cursos/processo-inscricao-liberar-cursos.component';
+import { ProcessoInscricaoAlunoBuscaDialogComponent } from './processo-inscricao-aluno-busca-dialog/processo-inscricao-aluno-busca-dialog.component';
 import { PermissaoGuard } from '../../@core/utils/permissao.guard';
 
 const routes: Routes = [
@@ -73,6 +75,7 @@ const routes: Routes = [
     NbButtonModule,
     NbCheckboxModule,
     NbSelectModule,
+    NbDialogModule.forChild(),
     ReactiveFormsModule,
     ComponentsModule,
     NbAlertModule
@@ -82,7 +85,8 @@ const routes: Routes = [
     ProcessoInscricaoListaComponent,
     ProcessoInscricaoCadastroComponent,
     ProcessoInscricaoUsuariosComponent,
-    ProcessoInscricaoLiberarCursosComponent
+    ProcessoInscricaoLiberarCursosComponent,
+    ProcessoInscricaoAlunoBuscaDialogComponent
   ],
   providers: [
     InterceptService,
@@ -92,6 +96,7 @@ const routes: Routes = [
       multi: true
     },
     ProcessoInscricaoService,
+    UsuarioService,
     CursosService
   ]
 })

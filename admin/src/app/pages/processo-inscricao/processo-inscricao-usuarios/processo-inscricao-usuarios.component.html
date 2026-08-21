@@ -10,6 +10,30 @@
     </div>
   </nb-card-header>
   <nb-card-body>
+    <form *ngIf="temPermissao('processoinscricao.inscrever_aluno')" [formGroup]="formularioInscricaoManual" class="inscricao-manual-form">
+      <div class="row">
+        <div class="col-sm-5">
+          <label class="label">Aluno</label>
+          <div class="aluno-selecionado">
+            <span *ngIf="alunoSelecionado">{{ alunoSelecionado.nome }} - Id {{ alunoSelecionado.id }}</span>
+            <span *ngIf="!alunoSelecionado">Nenhum aluno selecionado</span>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <label for="status" class="label">Status da inscrição</label>
+          <nb-select fullWidth id="status" formControlName="status">
+            <nb-option value="AG">Aguardando Pagamento</nb-option>
+            <nb-option value="CO">Confirmada</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-sm-4 inscricao-manual-form__acao">
+          <button type="button" nbButton status="primary" (click)="pesquisarAluno()">Pesquisar aluno</button>
+          <button type="button" nbButton status="basic" *ngIf="alunoSelecionado" (click)="limparAlunoSelecionado()">Limpar</button>
+          <button type="button" nbButton status="success" [disabled]="!alunoSelecionado" (click)="cadastrarInscricaoManual()">Adicionar aluno</button>
+        </div>
+      </div>
+    </form>
+
     <app-grid-view [colunas]="colunas" [acoes]="acoes" [dadosTabela]="dadosTabela"></app-grid-view>
   </nb-card-body>
 </nb-card>

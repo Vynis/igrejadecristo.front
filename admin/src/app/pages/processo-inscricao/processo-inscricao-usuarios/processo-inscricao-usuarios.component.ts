@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NbDialogService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
 import { ProcessoInscricaoUsuarioModel } from '../../../@core/models/processo-inscricao-usuario.model';
+import { UsuarioModel } from '../../../@core/models/usuario.model';
 import { PermissaoService } from '../../../@core/services/permissao.service';
 import { ProcessoInscricaoService } from '../../../@core/services/processo-inscricao.service';
 import { DataTableAcoes } from '../../components/_models/DataTableAcoes';
 import { DataTableColunas } from '../../components/_models/DataTableColunas';
+import { ProcessoInscricaoAlunoBuscaDialogComponent } from '../processo-inscricao-aluno-busca-dialog/processo-inscricao-aluno-busca-dialog.component';
 
 @Component({
   selector: 'app-processo-inscricao-usuarios',
@@ -14,6 +18,8 @@ import { DataTableColunas } from '../../components/_models/DataTableColunas';
 })
 export class ProcessoInscricaoUsuariosComponent implements OnInit {
   idProcessoInscricao: number;
+  formularioInscricaoManual: FormGroup;
+  alunoSelecionado: UsuarioModel;
 
   colunas: DataTableColunas[] = [
     { propriedade: 'usuarioId', titulo: 'Aluno Id', disabled: false, maxwidth: 90, cell: (row: ProcessoInscricaoUsuarioModel) => `${row.usuarioId}` },
@@ -28,21 +34,32 @@ export class ProcessoInscricaoUsuariosComponent implements OnInit {
 
   acoes: DataTableAcoes[] = [
     { icone: 'check_circle', evento: this.aprovar.bind(this), toolTip: 'Lançar aprovado', color: 'primary', visivel: row => row.statusEstudo !== 'AP' && this.temPermissao('processoinscricao.lancar_resultado') },
-    { icone: 'cancel', evento: this.reprovar.bind(this), toolTip: 'Lançar reprovado', color: 'warn', visivel: row => row.statusEstudo !== 'RE' && this.temPermissao('processoinscricao.lancar_resultado') }
+    { icone: 'cancel', evento: this.reprovar.bind(this), toolTip: 'Lançar reprovado', color: 'warn', visivel: row => row.statusEstudo !== 'RE' && this.temPermissao('processoinscricao.lancar_resultado') },
+    { icone: 'person_remove', evento: this.cancelarInscricao.bind(this), toolTip: 'Remover aluno do processo', color: 'warn', visivel: row => row.status !== 'CA' && this.temPermissao('processoinscricao.remover_aluno') }
   ];
   dadosTabela: ProcessoInscricaoUsuarioModel[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    private dialogService: NbDialogService,
     private processoInscricaoService: ProcessoInscricaoService,
     private permissaoService: PermissaoService,
     private toast: ToastrService
   ) { }
 
   ngOnInit() {
+    this.criarFormularioInscricaoManual();
+
     this.activatedRoute.params.subscribe(params => {
       this.idProcessoInscricao = Number(params.idProcessoInscricao);
       this.buscarUsuariosInscritos();
+    });
+  }
+
+  criarFormularioInscricaoManual() {
+    this.formularioInscricaoManual = this.fb.group({
+      status: ['AG', [Validators.required]]
     });
   }
 
@@ -99,6 +116,57 @@ export class ProcessoInscricaoUsuariosComponent implements OnInit {
       this.toast.success('Resultado lançado com sucesso!');
       this.buscarUsuariosInscritos();
     });
+  }
+
+  cadastrarInscricaoManual() {
+    if (!this.alunoSelecionado || !this.alunoSelecionado.id || !this.formularioInscricaoManual.valid) {
+      Object.keys(this.formularioInscricaoManual.controls).forEach(controlName => this.formularioInscricaoManual.controls[controlName].markAllAsTouched());
+      this.toast.error('Selecione o aluno e informe o status da inscrição');
+      return;
+    }
+
+    const status = this.formularioInscricaoManual.controls.status.value || 'AG';
+
+    this.processoInscricaoService.cadastrarInscricaoManual(this.alunoSelecionado.id, this.idProcessoInscricao, status).subscribe(res => {
+      if (!res || !res.success) {
+        this.toast.error(res && res.dados ? res.dados : 'Erro ao cadastrar inscrição manual');
+        return;
+      }
+
+      this.toast.success('Inscrição manual cadastrada com sucesso!');
+      this.alunoSelecionado = null;
+      this.formularioInscricaoManual.reset({ status: 'AG' });
+      this.buscarUsuariosInscritos();
+    });
+  }
+
+  cancelarInscricao(inscricao: ProcessoInscricaoUsuarioModel) {
+    const confirmar = confirm(`Deseja remover o aluno ${inscricao.nome} deste processo de inscrição? A inscrição será marcada como cancelada, sem apagar o histórico.`);
+
+    if (!confirmar)
+      return;
+
+    this.processoInscricaoService.cancelarInscricao(inscricao.id).subscribe(res => {
+      if (!res || !res.success) {
+        this.toast.error(res && res.dados ? res.dados : 'Erro ao remover aluno do processo');
+        return;
+      }
+
+      this.toast.success('Aluno removido do processo com sucesso!');
+      this.buscarUsuariosInscritos();
+    });
+  }
+
+  pesquisarAluno() {
+    this.dialogService.open(ProcessoInscricaoAlunoBuscaDialogComponent)
+      .onClose.subscribe((usuario: UsuarioModel) => {
+        if (usuario)
+          this.alunoSelecionado = usuario;
+      });
+  }
+
+  limparAlunoSelecionado() {
+    this.alunoSelecionado = null;
   }
 
   formatarData(data: string): string {

@@ -131,6 +131,50 @@
               <textarea rows="3" class="form-control" id="descricao" formControlName="descricao"></textarea>
             </div>
           </div>
+
+          <div class="row" style="margin-top: 20px;">
+            <div class="col-sm-12">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h6>Lotes de Valor</h6>
+                <button type="button" nbButton size="small" status="primary" (click)="adicionarLote()">Adicionar lote</button>
+              </div>
+
+              <div formArrayName="lotes">
+                <div class="row" style="margin-top: 10px;" *ngFor="let lote of lotes.controls; let i = index" [formGroupName]="i">
+                  <div class="col-sm-2">
+                    <label class="label">Nome</label>
+                    <input type="text" class="form-control" nbInput fullWidth formControlName="nome" placeholder="1º lote">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="label">Data Inicial</label>
+                    <input type="datetime-local" class="form-control" formControlName="dataInicial">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="label">Data Final</label>
+                    <input type="datetime-local" class="form-control" formControlName="dataFinal">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="label">Valor Cartão</label>
+                    <input type="number" step="0.01" class="form-control" formControlName="valor">
+                  </div>
+                  <div class="col-sm-2">
+                    <label class="label">Valor Pix/Boleto</label>
+                    <input type="number" step="0.01" class="form-control" formControlName="valorPixBoleto">
+                  </div>
+                  <div class="col-sm-1">
+                    <label class="label">Status</label>
+                    <nb-select fullWidth formControlName="status">
+                      <nb-option value="A">Ativo</nb-option>
+                      <nb-option value="I">Inativo</nb-option>
+                    </nb-select>
+                  </div>
+                  <div class="col-sm-1" style="padding-top: 22px;">
+                    <button type="button" nbButton size="small" status="danger" (click)="removerLote(i)">Remover</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </nb-card-body>
 
         <nb-card-footer>

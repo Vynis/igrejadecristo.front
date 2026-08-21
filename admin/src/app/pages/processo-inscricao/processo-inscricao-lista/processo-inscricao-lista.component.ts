@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FiltroItemModel } from '../../../@core/models/filtroItem.model';
 import { PaginationfilterModel } from '../../../@core/models/paginationfilter.model';
 import { ProcessoInscricaoModel } from '../../../@core/models/processo-inscricao.model';
+import { GridStateService } from '../../../@core/services/grid-state.service';
 import { PermissaoService } from '../../../@core/services/permissao.service';
 import { ProcessoInscricaoService } from '../../../@core/services/processo-inscricao.service';
 import { DataTableAcoes } from '../../components/_models/DataTableAcoes';
@@ -21,6 +22,7 @@ interface CicloAnoFiltro {
   styleUrls: ['./processo-inscricao-lista.component.scss']
 })
 export class ProcessoInscricaoListaComponent implements OnInit {
+  private readonly gridStateKey = 'processo-inscricao-lista';
 
   @ViewChild('filtroStatus', { static: true }) filtroStatus: ElementRef;
 
@@ -49,6 +51,7 @@ export class ProcessoInscricaoListaComponent implements OnInit {
   constructor(
     private processoInscricaoService: ProcessoInscricaoService,
     private permissaoService: PermissaoService,
+    private gridStateService: GridStateService,
     private router: Router
   ) { }
 
@@ -70,7 +73,8 @@ export class ProcessoInscricaoListaComponent implements OnInit {
         })),
       ];
 
-      this.obterDadosGrid();
+      if (!this.restaurarEstadoGrid())
+        this.obterDadosGrid();
     });
   }
 
@@ -80,6 +84,7 @@ export class ProcessoInscricaoListaComponent implements OnInit {
 
     this.processoInscricaoService.obterDadosFiltro(parametros).subscribe(res => {
       this.dadosTabela = res.dados;
+      this.salvarEstadoGrid();
     });
   }
 
@@ -135,6 +140,29 @@ export class ProcessoInscricaoListaComponent implements OnInit {
   private toNumberOrZero(valor: any): number {
     const numero = Number(valor);
     return Number.isNaN(numero) ? 0 : numero;
+  }
+
+  private salvarEstadoGrid() {
+    this.gridStateService.set<ProcessoInscricaoModel>(this.gridStateKey, {
+      filters: {
+        cicloAno: this.filtroCicloAnoSelecionado,
+        status: this.filtroStatus.nativeElement.value
+      },
+      data: this.dadosTabela
+    });
+  }
+
+  private restaurarEstadoGrid(): boolean {
+    const estado = this.gridStateService.get<ProcessoInscricaoModel>(this.gridStateKey);
+
+    if (!estado)
+      return false;
+
+    this.filtroCicloAnoSelecionado = estado.filters?.cicloAno || 'TODOS';
+    this.filtroStatus.nativeElement.value = estado.filters?.status || '';
+    this.dadosTabela = estado.data || [];
+
+    return true;
   }
 
 }

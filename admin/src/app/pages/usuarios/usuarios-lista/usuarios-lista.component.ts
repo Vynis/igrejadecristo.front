@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FiltroItemModel } from '../../../@core/models/filtroItem.model';
 import { PaginationfilterModel } from '../../../@core/models/paginationfilter.model';
 import { UsuarioModel } from '../../../@core/models/usuario.model';
+import { GridStateService } from '../../../@core/services/grid-state.service';
 import { PermissaoService } from '../../../@core/services/permissao.service';
 import { UsuarioService } from '../../../@core/services/usuario.service';
 import { DataTableAcoes } from '../../components/_models/DataTableAcoes';
@@ -15,6 +16,7 @@ import { DataTableColunas } from '../../components/_models/DataTableColunas';
   styleUrls: ['./usuarios-lista.component.scss']
 })
 export class UsuariosListaComponent implements OnInit {
+  private readonly gridStateKey = 'usuarios-lista';
 
   @ViewChild('filtroNome', { static: true }) filtroNome: ElementRef;
   @ViewChild('filtroEmail', { static: true }) filtroEmail: ElementRef;
@@ -40,12 +42,14 @@ export class UsuariosListaComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private permissaoService: PermissaoService,
+    private gridStateService: GridStateService,
     private router: Router,
     private toast: ToastrService
   ) { }
 
   ngOnInit() {
-    this.obterDadosGrid();
+    if (!this.restaurarEstadoGrid())
+      this.obterDadosGrid();
   }
 
   obterDadosGrid() {
@@ -54,6 +58,7 @@ export class UsuariosListaComponent implements OnInit {
 
     this.usuarioService.obterDadosFiltro(parametros).subscribe(res => {
       this.dadosTabela = res.dados;
+      this.salvarEstadoGrid();
     });
   }
 
@@ -98,5 +103,30 @@ export class UsuariosListaComponent implements OnInit {
 
       this.toast.success('Senha resetada para 123456 com sucesso!');
     });
+  }
+
+  private salvarEstadoGrid() {
+    this.gridStateService.set<UsuarioModel>(this.gridStateKey, {
+      filters: {
+        nome: this.filtroNome.nativeElement.value,
+        email: this.filtroEmail.nativeElement.value,
+        status: this.filtroStatus.nativeElement.value
+      },
+      data: this.dadosTabela
+    });
+  }
+
+  private restaurarEstadoGrid(): boolean {
+    const estado = this.gridStateService.get<UsuarioModel>(this.gridStateKey);
+
+    if (!estado)
+      return false;
+
+    this.filtroNome.nativeElement.value = estado.filters?.nome || '';
+    this.filtroEmail.nativeElement.value = estado.filters?.email || '';
+    this.filtroStatus.nativeElement.value = estado.filters?.status || '';
+    this.dadosTabela = estado.data || [];
+
+    return true;
   }
 }
