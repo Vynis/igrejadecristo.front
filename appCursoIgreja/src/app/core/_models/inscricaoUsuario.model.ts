@@ -9,6 +9,9 @@ export class InscricaoUsuario {
     status: string;
     usuarioId: number;
     processoInscricaoId: number;
+    processoInscricaoLoteId: number;
+    valorInscricao: number;
+    valorPixBoletoInscricao: number;
 
     usuario: Usuario = new Usuario();
     processoInscricao: ProcessoInscricao = new ProcessoInscricao();

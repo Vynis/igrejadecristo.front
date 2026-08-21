@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CursoModel } from '../../../@core/models/curso.model';
 import { PaginationfilterModel } from '../../../@core/models/paginationfilter.model';
-import { ProcessoInscricaoModel } from '../../../@core/models/processo-inscricao.model';
+import { ProcessoInscricaoLoteModel, ProcessoInscricaoModel } from '../../../@core/models/processo-inscricao.model';
 import { CursosService } from '../../../@core/services/cursos.service';
 import { ProcessoInscricaoService } from '../../../@core/services/processo-inscricao.service';
 
@@ -68,8 +68,34 @@ export class ProcessoInscricaoCadastroComponent implements OnInit {
       horarioListaPresencaFinal: [this.toInputTime(model.horarioListaPresencaFinal), [Validators.required]],
       dataInicioPresencial: [this.toInputDateTime(model.dataInicioPresencial)],
       dataFinalPresencial: [this.toInputDateTime(model.dataFinalPresencial)],
-      descricao: [model.descricao]
+      descricao: [model.descricao],
+      lotes: this.fb.array((model.lotes || []).map(lote => this.criarLoteForm(lote)))
     });
+  }
+
+  get lotes(): FormArray {
+    return this.formulario.get('lotes') as FormArray;
+  }
+
+  criarLoteForm(model: ProcessoInscricaoLoteModel): FormGroup {
+    return this.fb.group({
+      id: [model.id || 0],
+      processoInscricaoId: [model.processoInscricaoId || 0],
+      nome: [model.nome, [Validators.required]],
+      dataInicial: [this.toInputDateTime(model.dataInicial), [Validators.required]],
+      dataFinal: [this.toInputDateTime(model.dataFinal), [Validators.required]],
+      valor: [model.valor, [Validators.required]],
+      valorPixBoleto: [model.valorPixBoleto],
+      status: [model.status || 'A', [Validators.required]]
+    });
+  }
+
+  adicionarLote() {
+    this.lotes.push(this.criarLoteForm(new ProcessoInscricaoLoteModel()));
+  }
+
+  removerLote(index: number) {
+    this.lotes.removeAt(index);
   }
 
   validacao(): boolean {
@@ -86,6 +112,25 @@ export class ProcessoInscricaoCadastroComponent implements OnInit {
       this.existeErro = true;
       this.toast.error('Data inicial não pode ser maior que a data final.');
       return false;
+    }
+
+    const lotes = this.lotes.controls
+      .map(control => control.value)
+      .filter(lote => lote.status !== 'I')
+      .sort((a, b) => new Date(a.dataInicial).getTime() - new Date(b.dataInicial).getTime());
+
+    for (let i = 0; i < lotes.length; i++) {
+      if (new Date(lotes[i].dataInicial) > new Date(lotes[i].dataFinal)) {
+        this.existeErro = true;
+        this.toast.error('Data inicial do lote não pode ser maior que a data final.');
+        return false;
+      }
+
+      if (i > 0 && new Date(lotes[i].dataInicial) <= new Date(lotes[i - 1].dataFinal)) {
+        this.existeErro = true;
+        this.toast.error('Existem lotes com períodos sobrepostos.');
+        return false;
+      }
     }
 
     return true;
@@ -118,6 +163,21 @@ export class ProcessoInscricaoCadastroComponent implements OnInit {
     model.dataInicioPresencial = controls.dataInicioPresencial.value || null;
     model.dataFinalPresencial = controls.dataFinalPresencial.value || null;
     model.descricao = controls.descricao.value;
+    model.lotes = this.lotes.controls.map(control => {
+      const loteForm = control.value;
+      const lote = new ProcessoInscricaoLoteModel();
+
+      lote.id = Number(loteForm.id || 0);
+      lote.processoInscricaoId = model.id;
+      lote.nome = loteForm.nome;
+      lote.dataInicial = loteForm.dataInicial;
+      lote.dataFinal = loteForm.dataFinal;
+      lote.valor = Number(loteForm.valor);
+      lote.valorPixBoleto = loteForm.valorPixBoleto === '' || loteForm.valorPixBoleto === null ? null : Number(loteForm.valorPixBoleto);
+      lote.status = loteForm.status;
+
+      return lote;
+    });
     model.curso = null;
 
     return model;

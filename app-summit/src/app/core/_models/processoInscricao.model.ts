@@ -11,6 +11,10 @@ export class ProcessoInscricao {
     curso: Curso = new Curso();
     valor: number;
     valorPixBoleto: number;
+    valorAtual: number;
+    valorPixBoletoAtual: number;
+    loteAtual: string;
+    lotes: ProcessoInscricaoLote[];
     dataInicalPagto: Date;
     dataFinalPagto: Date;
     dataInicioVisualizacaoCurso: Date;
@@ -18,4 +22,15 @@ export class ProcessoInscricao {
     naoTemDataVisualizacao: boolean;
     descricaoPagto: string;
     descricao: string;
+}
+
+export class ProcessoInscricaoLote {
+    id: number;
+    processoInscricaoId: number;
+    nome: string;
+    dataInicial: Date;
+    dataFinal: Date;
+    valor: number;
+    valorPixBoleto: number;
+    status: string;
 }

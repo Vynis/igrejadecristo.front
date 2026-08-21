@@ -21,8 +21,20 @@
               <ion-card-content>
                 <div [innerHTML]="lista.descricao" ></div> <br>
                 <p>Período de Inscrição: <b> {{ lista.dataInicial | date:"dd/MM/yyyy"}} até {{ lista.dataFinal | date: "dd/MM/yyyy"}} </b> </p>
-                <!-- <em>Investimento: <b>{{	lista.tipo == 'P' ? (lista.valor | currency:'BRL':true ) + ' (Cartão) ou ' + (lista.valorPixBoleto | currency:'BRL':true ) + ' (Pix ou Boleto)'  : 'Gratuito' }}</b></em> <br>	 -->
-                <em>Investimento: <b>{{lista.descricaoPagto}}</b></em> <br>
+                <div *ngIf="lista.tipo == 'P' && lista.lotes && lista.lotes.length > 0" class="lotes-pagamento">
+                  <div class="lotes-titulo">Lotes de pagamento</div>
+                  <div class="lote-card" *ngFor="let lote of lista.lotes" [class.lote-atual]="lista.loteAtual == lote.nome">
+                    <div class="lote-cabecalho">
+                      <strong>{{ lote.nome }}</strong>
+                      <ion-badge *ngIf="lista.loteAtual == lote.nome" color="success">Atual</ion-badge>
+                    </div>
+                    <div class="lote-periodo">{{ lote.dataInicial | date:'dd/MM/yyyy HH:mm' }} até {{ lote.dataFinal | date:'dd/MM/yyyy HH:mm' }}</div>
+                    <div class="lote-valores">
+                      <span>Cartão <b>{{ lote.valor | currency:'BRL':true }}</b></span>
+                      <span *ngIf="lote.valorPixBoleto != null">Pix/Boleto <b>{{ lote.valorPixBoleto | currency:'BRL':true }}</b></span>
+                    </div>
+                  </div>
+                </div>
                 <ion-button (click)="inscrever(lista.id)" >Inscrever</ion-button>
               </ion-card-content>
             </ion-card>
