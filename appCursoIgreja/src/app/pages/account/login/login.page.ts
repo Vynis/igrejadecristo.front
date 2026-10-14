@@ -14,7 +14,6 @@ export class LoginPage implements OnInit {
   public hide = true;
   public form: FormGroup;
 
-
   constructor(
     private fb: FormBuilder,
     private loadCtrl: LoadingController,
@@ -83,31 +82,11 @@ export class LoginPage implements OnInit {
     error.present();
   }
 
-  async resetPassword() {
-    if (this.form.controls['email'].invalid) {
-      this.showError("Email/CPF inválido");
-      return;
-    }
-
-    const loading = await this.loadCtrl.create({ message: 'Restaurando sua senha...' });
-    loading.present();
-
-    this.authService.requestPassword(this.form.controls['email'].value).pipe(
-			tap(response => {
-        loading.dismiss();
-				if (response.success) {
-					if (response.dados.possuiEmail)
-						this.showError('Email enviado com sucesso!');
-					else
-						this.showError('Foi enviado um solicitação para email de nossa equipe. Em breve entraremos em contato.');
-				} else {
-					this.showError('Não existe Email/Cpf cadastrado em nossa base de dados.');
-				}
-			}),
-			finalize(() => {
-        loading.dismiss();
-			})
-		).subscribe();
+  resetPassword() {
+    const emailOuCpf = (this.form && this.form.controls['email'] ? this.form.controls['email'].value : '') || '';
+    this.navCtrl.navigateForward('/reset', {
+      queryParams: { termo: emailOuCpf }
+    });
   }
 
   cadastro() {

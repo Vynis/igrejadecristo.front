@@ -1,36 +1,140 @@
 <ion-header>
   <ion-toolbar color="dark">
-    <ion-title>Recriar uma nova senha</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/login"></ion-back-button>
     </ion-buttons>
+    <ion-title>Recuperar Senha</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [scrollEvents]="true" padding>
-  <ion-grid>
-    <ion-row justify-content-center>
-      <ion-col size-md="12">
-        <form [formGroup]="form">
-          <ion-list lines="none" class="animated fadeIn">
-            <ion-item>
-              <ion-label position="stacked">Nova Senha</ion-label>
-              <ion-input type="password"  placeholder="Nova Senha" formControlName="senha" required>
-              </ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked">Confirmar Senha</ion-label>
-              <ion-input type="password"  placeholder="Confirmar Senha" formControlName="confirmarSenha" required>
-              </ion-input>
-            </ion-item>
-          </ion-list>
-          <br />
+<ion-content [scrollEvents]="true" padding class="ion-padding">
+  <div class="reset-container">
 
-          <ion-button  expand="full" size="large" class="animated fadeIn" (click)="submit()" [disabled]="!form.valid">
-          Enviar
+    <!-- Logo Summit Academy -->
+    <div class="logo-header animated fadeIn">
+      <img src="assets/icon/logo_2.png" alt="Summit Academy">
+    </div>
+
+    <!-- Indicador de Etapas -->
+    <div class="step-indicator animated fadeIn">
+      <div class="step-dot" [class.active]="etapa === 1" [class.completed]="etapa > 1">1</div>
+      <div class="step-line" [class.active]="etapa > 1"></div>
+      <div class="step-dot" [class.active]="etapa === 2" [class.completed]="etapa > 2">2</div>
+      <div class="step-line" [class.active]="etapa > 2"></div>
+      <div class="step-dot" [class.active]="etapa === 3">3</div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- ETAPA 1: Identificação (Solicitar Código)       -->
+    <!-- ============================================== -->
+    <div *ngIf="etapa === 1" class="animated fadeIn">
+      <div class="form-header">
+        <h2>Esqueceu sua senha?</h2>
+        <p>Informe seu <strong>E-mail</strong> ou <strong>CPF</strong> cadastrado. Enviaremos um código de verificação para redefinir sua senha.</p>
+      </div>
+
+      <form [formGroup]="formSolicitar">
+        <ion-list lines="none">
+          <ion-item class="custom-item">
+            <ion-input type="text" placeholder="E-mail ou CPF" formControlName="emailOuCpf" autocomplete="username" (keyup.enter)="solicitarCodigo()">
+            </ion-input>
+          </ion-item>
+        </ion-list>
+
+        <ion-button expand="full" size="large" class="action-btn" [disabled]="formSolicitar.invalid" (click)="solicitarCodigo()">
+          Enviar Código
         </ion-button>
-        </form>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+
+        <div class="secondary-actions">
+          <ion-button fill="clear" expand="full" class="link-btn" (click)="voltarParaLogin()">
+            Lembrou da senha? Voltar ao Login
+          </ion-button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- ETAPA 2: Digitar Código de 6 Dígitos           -->
+    <!-- ============================================== -->
+    <div *ngIf="etapa === 2" class="animated fadeIn">
+      <div class="form-header">
+        <h2>Código de Verificação</h2>
+        <p>Enviamos um código de 6 dígitos para o e-mail: <br><strong>{{ emailMascarado }}</strong></p>
+      </div>
+
+      <form [formGroup]="formCodigo">
+        <ion-list lines="none">
+          <ion-item class="code-input-item" lines="none">
+            <ion-input type="tel" inputmode="numeric" maxlength="6" class="code-input ion-text-center"
+              placeholder="000000" formControlName="codigo" (keyup.enter)="validarCodigo()">
+            </ion-input>
+          </ion-item>
+        </ion-list>
+
+        <div class="password-warning">
+          <p>⏰ O código é válido por <strong>15 minutos</strong>. Caso não o veja, cheque também sua caixa de <strong>Spam</strong>.</p>
+        </div>
+
+        <ion-button expand="full" size="large" class="action-btn" [disabled]="formCodigo.invalid" (click)="validarCodigo()">
+          Verificar Código
+        </ion-button>
+
+        <div class="secondary-actions">
+          <ion-button fill="clear" expand="full" class="link-btn" (click)="reenviarCodigo()">
+            Não recebeu? Reenviar código
+          </ion-button>
+          <ion-button fill="clear" expand="full" class="link-btn" (click)="voltarEtapa1()">
+            Trocar E-mail ou CPF
+          </ion-button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- ETAPA 3: Definir Nova Senha                    -->
+    <!-- ============================================== -->
+    <div *ngIf="etapa === 3" class="animated fadeIn">
+      <div class="form-header">
+        <h2>Criar Nova Senha</h2>
+        <p>Digite sua nova senha de acesso.</p>
+      </div>
+
+      <form [formGroup]="formSenha">
+        <ion-list lines="none">
+          <ion-item class="custom-item">
+            <ion-input [type]="hideSenha ? 'password' : 'text'" placeholder="Nova Senha" formControlName="senha" autocomplete="new-password">
+            </ion-input>
+            <ion-icon class="clickable" [name]="hideSenha ? 'eye' : 'eye-off'" (click)="toggleHideSenha()">
+            </ion-icon>
+          </ion-item>
+
+          <ion-item class="custom-item">
+            <ion-input [type]="hideConfirmar ? 'password' : 'text'" placeholder="Confirmar Nova Senha" formControlName="confirmarSenha" autocomplete="new-password">
+            </ion-input>
+            <ion-icon class="clickable" [name]="hideConfirmar ? 'eye' : 'eye-off'" (click)="toggleHideConfirmar()">
+            </ion-icon>
+          </ion-item>
+        </ion-list>
+
+        <ion-button expand="full" size="large" class="action-btn" [disabled]="formSenha.invalid" (click)="salvarNovaSenha()">
+          Salvar Nova Senha
+        </ion-button>
+
+        <div class="secondary-actions">
+          <ion-button fill="clear" expand="full" class="link-btn" (click)="voltarParaLogin()">
+            Cancelar e Voltar ao Login
+          </ion-button>
+        </div>
+      </form>
+    </div>
+
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="dark">
+    <div class="footer-logo animated fadeIn">
+      <img src="assets/icon/logo-igreja-light.png" alt="Igreja de Cristo">
+    </div>
+  </ion-toolbar>
+</ion-footer>

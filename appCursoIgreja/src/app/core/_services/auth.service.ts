@@ -69,7 +69,28 @@ export class AuthService {
     }
 
     /*
-     * Submit forgot password request
+     * Solicitação de código de recuperação de senha (6 dígitos via Resend)
+     */
+    solicitarCodigoRecuperacao(emailOuCpf: string): Observable<any> {
+        return this.http.post<any>(`${this.caminhoApi}auth/solicitar-codigo-recuperacao`, { emailOuCpf });
+    }
+
+    /*
+     * Validação do código de 6 dígitos
+     */
+    validarCodigoRecuperacao(emailOuCpf: string, codigo: string): Observable<any> {
+        return this.http.post<any>(`${this.caminhoApi}auth/validar-codigo-recuperacao`, { emailOuCpf, codigo });
+    }
+
+    /*
+     * Redefinição de senha com token temporário validado
+     */
+    redefinirSenhaComCodigo(tokenTemporario: string, novaSenha: string): Observable<any> {
+        return this.http.post<any>(`${this.caminhoApi}auth/redefinir-senha-com-codigo`, { tokenTemporario, novaSenha });
+    }
+
+    /*
+     * Submit forgot password request (legado)
      *
      * @param {string} email
      * @returns {Observable<any>}
@@ -84,15 +105,12 @@ export class AuthService {
  	 * Handle Http operation that failed.
  	 * Let the app continue.
      *
-	 * @param operation - name of the operation that failed
+ 	 * @param operation - name of the operation that failed
  	 * @param result - optional value to return as the observable result
  	 */
     private handleError<T>(operation = 'operation', result?: any) {
         return (error: any): Observable<any> => {
-            // TODO: send the error to remote logging infrastructure
             console.error(error); // log to console instead
-
-            // Let the app keep running by returning an empty result.
             return of(result);
         };
     }
