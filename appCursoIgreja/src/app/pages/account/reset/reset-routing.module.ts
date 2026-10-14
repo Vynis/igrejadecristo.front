@@ -5,6 +5,10 @@ import { ResetPage } from './reset.page';
 
 const routes: Routes = [
   {
+    path: '',
+    component: ResetPage
+  },
+  {
     path: ':id',
     component: ResetPage
   }
